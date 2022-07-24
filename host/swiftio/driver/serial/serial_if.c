@@ -13,6 +13,8 @@
 // limitations under the License.
 //
 
+// Portting for swiftio 2022 - Modify by Madmachine
+
 /** Includes **/
 #include "string.h"
 #include "serial_drv.h"

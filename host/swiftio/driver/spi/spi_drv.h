@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Portting for swiftio 2022 - Modify by Madmachine
+
+
 /** prevent recursive inclusion **/
 #ifndef __SPI_DRV_H
 #define __SPI_DRV_H
@@ -22,6 +25,7 @@ extern "C" {
 
 /** Includes **/
 #include "common.h"
+#include "swift_os.h"
 
 /** constants/macros **/
 #define MAX_NETWORK_INTERFACES  2
