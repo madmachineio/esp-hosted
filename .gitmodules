@@ -2,3 +2,6 @@
 	path = common/protobuf-c
 	url = https://github.com/protobuf-c/protobuf-c.git
 	branch = master
+[submodule "host/swiftio/chal_export"]
+	path = host/swiftio/chal_export
+	url = git@github.com:madmachineio/chal_export.git
