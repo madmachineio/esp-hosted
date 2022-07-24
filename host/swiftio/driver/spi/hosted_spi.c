@@ -16,7 +16,7 @@ int hosted_spi_init(void *spi, void *cs)
 	return 0;
 }
 
-int hosted_spi_transceive(void* tx_data, void* rx_data, uint32_t max_buffer_len, k_timeout_t timeout)
+int hosted_spi_transceive(void* tx_data, void* rx_data, int max_buffer_len, int timeout)
 {
 	int ret = 0;
 	

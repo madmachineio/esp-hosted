@@ -20,7 +20,8 @@
 extern "C" {
 #endif
 
-#include <kernel.h>
+#include "errno.h"
+
 #include "common.h"
 #include "netdev_if.h"
 
@@ -31,7 +32,7 @@ extern "C" {
 #define NETDEV_STATE_DOWN   0
 #define NETDEV_STATE_UP     1
 
-#define RX_QUEUE_SIZE       CONFIG_HOSTED_NETIF_QUEUE_LEN
+#define RX_QUEUE_SIZE       16
 
 struct network_handle;
 

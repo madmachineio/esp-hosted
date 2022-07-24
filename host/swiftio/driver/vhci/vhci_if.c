@@ -16,6 +16,8 @@
 // Portting for swiftio 2022 - Modify by Madmachine
 
 /** Includes **/
+#include <stdlib.h>
+
 #include "vhci_if.h"
 #include "adapter.h"
 #include "spi_drv.h"

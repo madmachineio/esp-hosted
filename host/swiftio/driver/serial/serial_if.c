@@ -17,6 +17,8 @@
 
 /** Includes **/
 #include "string.h"
+#include <stdlib.h>
+
 #include "serial_drv.h"
 #include "serial_if.h"
 #include "adapter.h"
@@ -25,7 +27,7 @@
 
 /** Macros / Constants **/
 #define MAX_SERIAL_INTF                   2
-#define TO_SERIAL_INFT_QUEUE_SIZE         CONFIG_HOSTED_SERIALIF_QUEUE_LEN
+#define TO_SERIAL_INFT_QUEUE_SIZE         16
 
 typedef enum {
 	INIT,

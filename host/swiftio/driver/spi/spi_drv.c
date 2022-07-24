@@ -17,6 +17,8 @@
 
 /** Includes **/
 #include <string.h>
+#include <stdlib.h>
+
 #include "trace.h"
 #include "spi_drv.h"
 #include "adapter.h"
@@ -25,9 +27,7 @@
 #include "vhci_if.h"
 
 #include "hosted_spi.h"
-#include "hosted/hosted.h"
-
-
+#include "swift_gpio.h"
 
 
 #define SEND_QUEUE_SIZE               	10
@@ -55,8 +55,8 @@ static struct netdev_ops esp_net_ops = {
 	.netdev_xmit = esp_netdev_xmit,
 };
 
-extern bool hosted_is_synced();
-extern int hosted_sync_set(bool set);
+//extern bool hosted_is_synced();
+//extern int hosted_sync_set(bool set);
 
 static void *trans_sem = NULL;
 static void *trans_mutex = NULL;
@@ -76,8 +76,8 @@ static void (*esp_if_evt_handler_fp) (uint8_t);
 
 /** function declaration **/
 /** Exported functions **/
-static void transaction_task(void *arg);
-static void process_rx_task(void *arg);
+static void transaction_task(void *arg, void *p2, void *p3);
+static void process_rx_task(void *arg, void *p2, void *p3);
 static uint8_t * get_tx_buffer(uint8_t *is_valid_tx_buf);
 static void deinit_netdev(void);
 
@@ -280,7 +280,7 @@ static int if_transaction(uint8_t * txbuff)
 
 	/* Allocate rx buffer */
 	rxbuff = (uint8_t *)malloc(MAX_SPI_BUFFER_SIZE);
-	if_assert(rxbuff);
+	assert(rxbuff);
 	memset(rxbuff, 0, MAX_SPI_BUFFER_SIZE);
 
 	if(!txbuff) {
@@ -288,11 +288,11 @@ static int if_transaction(uint8_t * txbuff)
 		 * valid resetted txbuff is needed for SPI driver
 		 */
 		txbuff = (uint8_t *)malloc(MAX_SPI_BUFFER_SIZE);
-		if_assert(txbuff);
+		assert(txbuff);
 		memset(txbuff, 0, MAX_SPI_BUFFER_SIZE);
 	}
 	int retval = hosted_spi_transceive((uint8_t *) txbuff, (uint8_t *) rxbuff, MAX_SPI_BUFFER_SIZE / 4,
-                                      K_FOREVER);
+                                      -1);
     switch(retval)
 	{
 		case 0:
@@ -395,7 +395,7 @@ static void transaction_task(void *arg, void *p2, void *p3)
   * @param  argument: Not used
   * @retval None
   */
-static void process_rx_task(void *arg)
+static void process_rx_task(void *arg, void *p2, void *p3)
 {
 	interface_buffer_handle_t buf_handle = {0};
 	uint8_t *payload = NULL;
@@ -418,7 +418,7 @@ static void process_rx_task(void *arg)
 		if (buf_handle.if_type == ESP_SERIAL_IF) {
 
 			serial_buf = (uint8_t *)malloc(buf_handle.payload_len);
-			if_assert(serial_buf);
+			assert(serial_buf);
 
 			memcpy(serial_buf, payload, buf_handle.payload_len);
 
@@ -432,11 +432,11 @@ static void process_rx_task(void *arg)
 
 			if (priv) {
 				buffer = (struct net_pbuf *)malloc(sizeof(struct net_pbuf));
-				if_assert(buffer);
+				assert(buffer);
 
 				buffer->len = buf_handle.payload_len;
 				buffer->payload = malloc(buf_handle.payload_len);
-				if_assert(buffer->payload);
+				assert(buffer->payload);
 
 				memcpy(buffer->payload, buf_handle.payload,
 						buf_handle.payload_len);
@@ -446,7 +446,7 @@ static void process_rx_task(void *arg)
 			
 		} else if (buf_handle.if_type == ESP_HCI_IF) {
 			vhci_buf = (uint8_t *)malloc(buf_handle.payload_len);
-			if_assert(vhci_buf);
+			assert(vhci_buf);
 			memcpy(vhci_buf, payload, buf_handle.payload_len);
 
 			/* vhci interface path */
@@ -572,7 +572,7 @@ void esp_device_if_init(void *spi,
 	ret = init_netdev();
 	if (ret) {
 		printf("netdev failed to init\n\r");
-		if_assert(ret==0);
+		assert(ret==0);
 	}
 
 	trans_sem = swifthal_os_sem_create(1, 1);

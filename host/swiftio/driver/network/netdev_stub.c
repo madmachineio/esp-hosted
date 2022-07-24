@@ -48,7 +48,7 @@ int netdev_open(netdev_handle_t ndev)
 	if (!ndev)
 		return -EIO;
 
-	ndev->rx_q = swifthal_os_mq_create(sizeof(struct net_pbuf), RX_QUEUE_SIZE)
+	ndev->rx_q = swifthal_os_mq_create(sizeof(struct net_pbuf), RX_QUEUE_SIZE);
 	if (ndev->rx_q == NULL) {
         printk("ndev->rx_q] no mem\n");
         return ENOMEM;
