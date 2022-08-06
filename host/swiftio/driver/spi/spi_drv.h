@@ -28,7 +28,10 @@ extern "C" {
 #include "swift_os.h"
 
 /** constants/macros **/
+#define STA_INTERFACE_ID		0
+#define SOFTAP_INTERFACE_ID		1
 #define MAX_NETWORK_INTERFACES  2
+
 #define STA_INTERFACE           "ESP_STATION"
 #define SOFTAP_INTERFACE        "ESP_SOFTAP"
 
@@ -52,13 +55,12 @@ typedef enum spi_drv_events_s {
 
 void esp_device_if_init(void *spi, void *spi_cs_gpio,
 									void *hand_gpio, void *ready_gpio,
-									void *reset_gpio,
 									void(*if_evt_handler)(uint8_t));
 
 int esp_device_if_transaction(uint8_t iface_type, uint8_t iface_num,
 								uint8_t * wbuffer, uint16_t wlen);
 
-void esp_device_if_reset(void);
+void esp_device_if_reset(void *reset_gpio);
 
 struct esp_private {
 	uint8_t     if_type;

@@ -33,6 +33,8 @@
 #define SEND_QUEUE_SIZE               	10
 #define RECV_QUEUE_SIZE             	10
 
+#define RECV_TASK_STACK_SIZE		(4*1024)
+#define TRANS_TASK_STACK_SIZE		(4*1024)
 
 #define RECV_TASK_PRIORITY			6
 #define TRANS_TASK_PRIORITY			6
@@ -45,7 +47,6 @@ static int esp_netdev_open(netdev_handle_t netdev);
 static int esp_netdev_close(netdev_handle_t netdev);
 static int esp_netdev_xmit(netdev_handle_t netdev, struct net_pbuf *net_buf);
 
-extern void hosted_priv_event_handler(struct esp_priv_event *priv_event);
 
 static struct esp_private *esp_priv[MAX_NETWORK_INTERFACES];
 
@@ -467,7 +468,9 @@ static void process_rx_task(void *arg, void *p2, void *p3)
 				}
 			} else {
 				/* User can re-use this type of transaction */
-				hosted_priv_event_handler(event);
+				if (esp_if_evt_handler_fp) {
+					esp_if_evt_handler_fp(event->event_type);
+				}
 			}
 		}
 
@@ -549,7 +552,6 @@ void esp_device_if_init(void *spi,
 									void *spi_cs_gpio,
 									void *hand_gpio,
 									void *ready_gpio,
-									void *reset_gpio,
 									void(*if_evt_handler)(uint8_t))
 {
 	int ret = hosted_spi_init(spi, spi_cs_gpio);
@@ -560,7 +562,6 @@ void esp_device_if_init(void *spi,
 
 	esp_hand_gpio = hand_gpio;
 	esp_ready_gpio = ready_gpio;
-	esp_reset_gpio = reset_gpio;
 
 	swifthal_gpio_interrupt_callback_install(esp_hand_gpio, NULL, esp_device_if_isr);
 	swifthal_gpio_interrupt_callback_install(esp_ready_gpio, NULL, esp_device_if_isr);
@@ -599,13 +600,17 @@ void esp_device_if_init(void *spi,
         return;
     }
 
-	trans_thread = swifthal_os_task_create(transaction_task, 
+	trans_thread = swifthal_os_task_create("transaction_task",
+							transaction_task, 
 							NULL, NULL, NULL, 
-							TRANS_TASK_PRIORITY);
+							TRANS_TASK_PRIORITY,
+							TRANS_TASK_STACK_SIZE);
 
-	recv_thread = swifthal_os_task_create(process_rx_task, 
+	recv_thread = swifthal_os_task_create("process_rx_task",
+							process_rx_task, 
 							NULL, NULL, NULL, 
-							RECV_TASK_PRIORITY);
+							RECV_TASK_PRIORITY,
+							RECV_TASK_STACK_SIZE);
 
 	swifthal_gpio_interrupt_enable(esp_hand_gpio);
 	swifthal_gpio_interrupt_enable(esp_ready_gpio);
@@ -649,11 +654,17 @@ int esp_device_if_transaction(uint8_t iface_type, uint8_t iface_num,
 	return 0;
 }
 
-void esp_device_if_reset(void)
+void esp_device_if_reset(void *reset_gpio)
 {
-	swifthal_gpio_set(esp_reset_gpio, 0);
-	swifthal_ms_sleep(100);
-	swifthal_gpio_set(esp_reset_gpio, 1);
+	if(reset_gpio != NULL){
+		esp_reset_gpio = reset_gpio;
+	}
+
+	if(esp_reset_gpio != NULL){
+		swifthal_gpio_set(esp_reset_gpio, 0);
+		swifthal_ms_sleep(100);
+		swifthal_gpio_set(esp_reset_gpio, 1);
+	}
 }
 
 

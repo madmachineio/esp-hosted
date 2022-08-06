@@ -16,6 +16,7 @@ INCLUDE_DIRECTORIES(./driver/vhci/)
 INCLUDE_DIRECTORIES(../host_common/include/)
 INCLUDE_DIRECTORIES(../../common/include/)
 INCLUDE_DIRECTORIES(../../common/protobuf-c/)
+INCLUDE_DIRECTORIES(./)
 
 ADD_COMPILE_OPTIONS(${C_FLAGS})
 
