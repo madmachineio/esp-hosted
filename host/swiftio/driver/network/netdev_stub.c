@@ -70,7 +70,7 @@ void netdev_close(netdev_handle_t ndev)
 
 	ndev->state = NETDEV_STATE_DOWN;
 
-    k_msleep(200);
+    swifthal_ms_sleep(200);
 	/* reset queue */
 	swifthal_os_mq_destory(ndev->rx_q);
 	ndev->rx_q = NULL;
@@ -241,7 +241,7 @@ int netdev_rx(netdev_handle_t dev, struct net_pbuf *net_buf)
 
 	if (!ndev || !net_buf) {
 		printf ("Invalid arguments\n");
-        k_msleep(50);
+        swifthal_ms_sleep(50);
 		return -1;
 	}
 
@@ -271,6 +271,6 @@ done:
 		free(net_buf);
 		net_buf = NULL;
 	}
-    k_msleep(50);
+    swifthal_ms_sleep(50);
 	return -1;
 }

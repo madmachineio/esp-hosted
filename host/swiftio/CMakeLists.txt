@@ -21,8 +21,10 @@ INCLUDE_DIRECTORIES(./)
 ADD_COMPILE_OPTIONS(${C_FLAGS})
 
 file(GLOB_RECURSE LIBESP32C3HOSTED_SRC ./*.c)
+add_definitions(-DSTM32F469xx)
 	
 ADD_LIBRARY(esp32c3hosted STATIC ${LIBESP32C3HOSTED_SRC}
+									../host_common/commands.c								
 									../host_common/transport_pserial.c
 									../../common/protobuf-c/protobuf-c/protobuf-c.c
 									../../common/esp_hosted_config.pb-c.c)
