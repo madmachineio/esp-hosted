@@ -25,6 +25,11 @@
 #include "spi_drv.h"
 #include "trace.h"
 
+#define SERIAL_IF_LOGD	
+#define SERIAL_IF_LOGI	printf
+#define SERIAL_IF_LOGE	printf
+
+
 /** Macros / Constants **/
 #define MAX_SERIAL_INTF                   2
 #define TO_SERIAL_INFT_QUEUE_SIZE         16
@@ -69,14 +74,14 @@ static struct serial_operations serial_fops = {
 static int serial_open(serial_handle_t *serial_hdl)
 {
 	if (! serial_hdl) {
-		printf("serial invalid hdr\n\r");
+		SERIAL_IF_LOGE("serial invalid hdr\n\r");
 		return -1;
 	}
 
 	/* Queue - serial rx */
 	serial_hdl->queue = swifthal_os_mq_create(sizeof(interface_buffer_handle_t), TO_SERIAL_INFT_QUEUE_SIZE);
 	if (serial_hdl->queue == NULL) {
-		printk("[serial_hdl->queue] no mem\n");
+		SERIAL_IF_LOGE("[serial_hdl->queue] no mem\n");
         serial_cleanup(serial_hdl);
         return -1;
 	}
@@ -143,7 +148,7 @@ static uint8_t * serial_read(const serial_handle_t * serial_hdl,
 
 	/* check if serial interface valid */
 	if ((! serial_hdl) || (serial_hdl->state != ACTIVE)) {
-		printf("serial invalid interface\n\r");
+		SERIAL_IF_LOGE("serial invalid interface\n\r");
 		return NULL;
 	}
 
@@ -165,7 +170,7 @@ static uint8_t * serial_read(const serial_handle_t * serial_hdl,
 	 * In our example, first approach of blocking read is used.
 	 */
     if (swifthal_os_mq_recv(serial_hdl->queue, &buf_handle, 0) != 0) {
-        printk("[%s] serial queue recv failed \n", __FUNCTION__ );
+        SERIAL_IF_LOGE("[%s] serial queue recv failed \n", __FUNCTION__ );
         return NULL;
     }
 
@@ -191,7 +196,7 @@ static int serial_write(const serial_handle_t * serial_hdl,
 {
 
 	if ((! serial_hdl) || (serial_hdl->state != ACTIVE)) {
-		printf("serial invalid interface for write\n\r");
+		SERIAL_IF_LOGE("serial invalid interface for write\n\r");
 		return -1;
 	}
 
@@ -216,7 +221,7 @@ int serial_rx_handler(uint8_t if_num, uint8_t *rxbuff, uint16_t rx_len)
 	serial_hdl = get_serial_handle(if_num);
 
 	if ((! serial_hdl) || (serial_hdl->state != ACTIVE)) {
-		printf("Serial interface not registered yet\n\r");
+		SERIAL_IF_LOGE("Serial interface not registered yet\n\r");
 		return -1 ;
 	}
 	buf_handle.if_type = ESP_SERIAL_IF;
@@ -264,7 +269,7 @@ serial_handle_t * serial_init(void(*serial_rx_callback)(void))
 
 		serial_hdl = (serial_handle_t *)malloc(sizeof(serial_handle_t));
 		if (! serial_hdl) {
-			printf("Serial interface - malloc failed\n\r");
+			SERIAL_IF_LOGE("Serial interface - malloc failed\n\r");
 			return NULL;
 		}
 
@@ -278,7 +283,7 @@ serial_handle_t * serial_init(void(*serial_rx_callback)(void))
 		conn_num++;
 
 	} else {
-		printf("Number of serial interface connections overflow\n\r");
+		SERIAL_IF_LOGE("Number of serial interface connections overflow\n\r");
 		return NULL;
 	}
 
