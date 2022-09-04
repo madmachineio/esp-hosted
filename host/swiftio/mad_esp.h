@@ -69,6 +69,8 @@ int mad_esp_sta_close(void);
 
 int mad_esp_sta_tx(unsigned char *data, unsigned int len);
 
+int mad_esp_sta_mac_get(char *mac);
+
 int mad_esp_sta_info(mad_esp_wifi_sta_info_t *info);
 
 int mad_esp_ap_open(char *ssid,
@@ -82,6 +84,8 @@ int mad_esp_ap_open(char *ssid,
 
 
 int mad_esp_ap_close(void);
+
+int mad_esp_ap_mac_get(char *mac);
 
 int mad_esp_ap_tx(unsigned char *data, unsigned int len);
 

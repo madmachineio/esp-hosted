@@ -169,6 +169,13 @@ int mad_esp_sta_close(void)
 	return network_close(virtual_netif);
 }
 
+int mad_esp_sta_mac_get(char *mac)
+{
+	printf("esp sta mac %s\n", station_mac);
+	return convert_mac_to_bytes(mac, station_mac);
+}
+
+
 int mad_esp_sta_tx(unsigned char *data, unsigned int len)
 {
 	struct mad_esp_wifi_data *wifi_if = &wifi_data[STA_INTERFACE_ID];
@@ -266,6 +273,12 @@ int mad_esp_ap_close(void)
 
 	return network_close(virtual_netif);
 }
+
+int mad_esp_ap_mac_get(char *mac)
+{
+	return convert_mac_to_bytes(mac, ap_mac);
+}
+
 
 
 int mad_esp_ap_tx(unsigned char *data, unsigned int len)
