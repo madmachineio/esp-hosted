@@ -34,14 +34,14 @@
 #define SPI_LOGE        printf
 
 
-#define SEND_QUEUE_SIZE                 10
-#define RECV_QUEUE_SIZE                 10
+#define SEND_QUEUE_SIZE                 16
+#define RECV_QUEUE_SIZE                 16
 
 #define RECV_TASK_STACK_SIZE            (4 * 1024)
 #define TRANS_TASK_STACK_SIZE           (4 * 1024)
 
-#define RECV_TASK_PRIORITY                      6
-#define TRANS_TASK_PRIORITY                     6
+#define RECV_TASK_PRIORITY                      5
+#define TRANS_TASK_PRIORITY                     5
 
 #define MAX_PAYLOAD_SIZE (MAX_SPI_BUFFER_SIZE - sizeof(struct esp_payload_header))
 
@@ -85,6 +85,42 @@ static void transaction_task(void *arg, void *p2, void *p3);
 static void process_rx_task(void *arg, void *p2, void *p3);
 static uint8_t *get_tx_buffer(uint8_t *is_valid_tx_buf);
 static void deinit_netdev(void);
+
+#define ICMP_TIME_CHECK
+#ifdef ICMP_TIME_CHECK
+static long long recv_time = -1;
+static long long recv_tran_time = -1;
+
+static char send_flag = 0;
+static int recv_cnt = 0;
+static int send_cnt = 0;
+
+const char host_mac[] = {0x70, 0xc9, 0x4e, 0xe3, 0x17, 0x6b};
+const char esp_mac[] = {0x60, 0x55, 0xf9, 0x77, 0x5f, 0xb0};
+
+
+static char icmp_check_send(char *payload)
+{
+	if(memcmp(payload, host_mac, 6) == 0 &&
+		memcmp(payload+6, esp_mac, 6) ==0 &&
+		payload[23] == 0x01){
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
+static char icmp_check_recv(char *payload)
+{
+	if(memcmp(payload, esp_mac, 6) == 0 &&
+		memcmp(payload+6, host_mac, 6) == 0 &&
+		payload[23] == 0x01){
+		return 1;
+	}else{
+		return 0;
+	}
+}
+#endif
 
 /**
  * @brief  get private interface of expected type and number
@@ -264,9 +300,9 @@ static void check_and_execute_spi_transaction(void)
 			 * a. A valid tx buffer to be transmitted towards slave
 			 * b. Slave wants to send something (Rx for host)
 			 */
-			swifthal_os_mutex_lock(trans_mutex, -1);
+			// swifthal_os_mutex_lock(trans_mutex, -1);
 			if_transaction(txbuff);
-			swifthal_os_mutex_unlock(trans_mutex);
+			// swifthal_os_mutex_unlock(trans_mutex);
 		}
 	}
 }
@@ -280,6 +316,7 @@ static void check_and_execute_spi_transaction(void)
  * @param  txbuff: TX SPI buffer
  * @retval 0 / -1
  */
+
 static int if_transaction(uint8_t *txbuff)
 {
 	uint8_t *rxbuff = NULL;
@@ -287,6 +324,10 @@ static int if_transaction(uint8_t *txbuff)
 	struct  esp_payload_header *payload_header;
 	uint16_t len, offset;
 	uint16_t rx_checksum = 0, checksum = 0;
+#ifdef ICMP_TIME_CHECK
+	long long read_time = -1;
+	long long spi_tran_time = -1;
+#endif
 
 	/* Allocate rx buffer */
 	rxbuff = (uint8_t *)malloc(MAX_SPI_BUFFER_SIZE);
@@ -302,8 +343,33 @@ static int if_transaction(uint8_t *txbuff)
 		memset(txbuff, 0, MAX_SPI_BUFFER_SIZE);
 	}
 
+
+
+#ifdef ICMP_TIME_CHECK
+
+	spi_tran_time = swifthal_uptime_get();
 	int retval = hosted_spi_transceive((uint8_t *) txbuff, (uint8_t *) rxbuff, MAX_SPI_BUFFER_SIZE,
 					   -1);
+
+	read_time = swifthal_uptime_get();
+
+	if (send_flag == 1) {
+		send_cnt++;
+		send_flag = 0;
+		printf("rx(%d)(%lld ms)-tx(%d)(%lld ms) time %lld ms\n",
+		       recv_cnt,
+		       recv_tran_time,
+		       send_cnt,
+		       read_time - spi_tran_time,
+		       spi_tran_time - recv_time);
+	}
+	recv_time = -1;
+
+	spi_tran_time = read_time - spi_tran_time;
+#else
+	int retval = hosted_spi_transceive((uint8_t *) txbuff, (uint8_t *) rxbuff, MAX_SPI_BUFFER_SIZE,
+					   -1);
+#endif
 	switch (retval) {
 	case 0:
 		/* create buffer rx handle, used for processing */
@@ -345,6 +411,19 @@ static int if_transaction(uint8_t *txbuff)
 				buf_handle.if_type = payload_header->if_type;
 				buf_handle.if_num = payload_header->if_num;
 				buf_handle.payload = rxbuff + offset;
+#ifdef ICMP_TIME_CHECK
+				if (icmp_check_recv(buf_handle.payload)) {
+
+					// save recv icmp package time
+					recv_time = read_time;
+
+					// record recv icmp count
+					recv_cnt++;
+
+					// save recv icmp spi time
+					recv_tran_time = spi_tran_time;
+				}
+#endif
 				SPI_LOGD("rev if and send recvfromesp_queue\n");
 				if (0 != swifthal_os_mq_send(recvfromesp_queue, &buf_handle, -1)) {
 					SPI_LOGE("Failed to send buffer\n\r");
@@ -427,6 +506,8 @@ static void process_rx_task(void *arg, void *p2, void *p3)
 			SPI_LOGE("recv recvfromesp_queue %d\n", ret);
 			continue;
 		}
+
+
 
 		/* point to payload */
 		payload = buf_handle.payload;
@@ -548,7 +629,13 @@ static uint8_t *get_tx_buffer(uint8_t *is_valid_tx_buf)
 		payload_header->if_num = buf_handle.if_num;
 		memcpy(payload, buf_handle.payload, min(len, MAX_PAYLOAD_SIZE));
 		payload_header->checksum = htole16(compute_checksum(sendbuf,
-								    sizeof(struct esp_payload_header) + len));;
+								    sizeof(struct esp_payload_header) + len));
+#ifdef ICMP_TIME_CHECK
+		if (recv_time > 0 &&
+		    icmp_check_send(payload)) {
+			send_flag = 1;
+		}
+#endif
 	}
 
 done:
@@ -590,7 +677,7 @@ void esp_device_if_init(void *spi,
 		assert(ret == 0);
 	}
 
-	trans_sem = swifthal_os_sem_create(1, 1);
+	trans_sem = swifthal_os_sem_create(1, 100);
 	if (trans_sem == NULL) {
 		SPI_LOGE("[sem] no mem \r\n");
 		return;
@@ -682,7 +769,8 @@ int esp_device_if_transaction(uint8_t iface_type, uint8_t iface_num,
 
 	swifthal_os_mq_send(sendtoesp_queue, &buf_handle, -1);
 
-	check_and_execute_spi_transaction();
+	// check_and_execute_spi_transaction();
+	swifthal_os_sem_give(trans_sem);
 
 	return 0;
 }
