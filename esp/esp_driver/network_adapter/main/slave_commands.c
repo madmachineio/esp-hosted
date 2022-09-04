@@ -95,6 +95,11 @@ void vTimerCallback( TimerHandle_t xTimer )
     esp_restart();
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstringop-overflow"
+
+
+
 // event handler for station connect/disconnect to/from AP
 static void station_event_handler(void *arg, esp_event_base_t event_base,
                                 int32_t event_id, void *event_data)
@@ -1962,3 +1967,6 @@ err:
     esp_hosted_config_cleanup(&resp);
     return ESP_FAIL;
 }
+
+#pragma GCC diagnostic pop
+
