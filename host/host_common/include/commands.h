@@ -13,7 +13,7 @@
 #define FAILURE                 -1
 #define SSID_LENGTH             32
 #define PASSWORD_LENGTH         64
-#define BSSID_LENGTH            17
+#define BSSID_LENGTH            19
 #define STATUS_LENGTH           14
 #define NOT_CONNECTED           1
 #define NO_AP_FOUND             2

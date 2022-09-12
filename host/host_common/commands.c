@@ -569,13 +569,14 @@ int wifi_get_ap_config (esp_hosted_control_config_t *ap_config)
         if (resp->resp_get_ap_config->ssid.data) {
             strncpy((char *)ap_config->station.ssid,
                     (char *)resp->resp_get_ap_config->ssid.data,
-                    MAX_SSID_LENGTH);
+                    min(resp->resp_get_ap_config->ssid.len, MAX_SSID_LENGTH));
             ap_config->station.ssid[MAX_SSID_LENGTH-1] ='\0';
         }
         if (resp->resp_get_ap_config->bssid.data) {
             strncpy((char *)ap_config->station.bssid,
-                    (char *)resp->resp_get_ap_config->bssid.data, MAC_LENGTH);
-            ap_config->station.bssid[MAC_LENGTH-1] = '\0';
+                    (char *)resp->resp_get_ap_config->bssid.data,
+                    min(resp->resp_get_ap_config->bssid.len, BSSID_LENGTH));
+            ap_config->station.bssid[BSSID_LENGTH-1] = '\0';
         }
 
         ap_config->station.channel = resp->resp_get_ap_config->chnl;
