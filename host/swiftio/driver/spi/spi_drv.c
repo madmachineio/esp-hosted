@@ -789,4 +789,25 @@ void esp_device_if_reset(void *reset_gpio)
 	}
 }
 
+static unsigned char txbuf[MAX_SPI_BUFFER_SIZE];
+static unsigned char rxbuf[MAX_SPI_BUFFER_SIZE];
+
+void esp_device_if_sta_send(unsigned char *data, unsigned int len)
+{
+	unsigned char *payload;
+	struct esp_payload_header * payload_header;
+	payload_header = (struct esp_payload_header *) txbuf;
+	payload = txbuf + sizeof(struct esp_payload_header);
+	payload_header->len = htole16(len);
+	payload_header->offset = htole16(sizeof(struct esp_payload_header));
+	payload_header->if_type = ESP_STA_IF;
+	payload_header->if_num = 0;
+	memcpy(payload, data, min(len, MAX_PAYLOAD_SIZE));
+	payload_header->checksum = htole16(compute_checksum(txbuf,
+							    sizeof(struct esp_payload_header) + len));
+
+	return hosted_spi_transceive((uint8_t *) txbuf, (uint8_t *) rxbuf, MAX_SPI_BUFFER_SIZE,
+					   -1);
+}
+
 
