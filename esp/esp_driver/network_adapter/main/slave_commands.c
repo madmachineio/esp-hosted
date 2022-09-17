@@ -1670,6 +1670,101 @@ err:
     return ESP_OK;
 }
 
+static esp_err_t cmd_set_madmachine_priv_handler (EspHostedConfigPayload *req,
+        EspHostedConfigPayload *resp, void *priv_data)
+{
+    esp_err_t ret = ESP_OK;
+    EspHostedMadMachinePrivType type = ESP_HOSTED_MADMACHINE_PRIV_TYPE__Type_RECV;
+    EspHostedRespSetMadMachinePriv *resp_payload = NULL;
+
+    if (!req || !resp) {
+        ESP_LOGE(TAG, "Invalid parameters");
+        return ESP_FAIL;
+    }
+
+    resp_payload = (EspHostedRespSetMadMachinePriv *)
+	       calloc(1,sizeof(EspHostedRespSetMadMachinePriv));
+    if (!resp_payload) {
+        ESP_LOGE(TAG,"Failed to allocate memory");
+        return ESP_ERR_NO_MEM;
+    }
+
+    esp_hosted_resp_set_madmachine_priv__init(resp_payload);
+    resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_SET_MADMACHINE_PRIV;
+    resp->resp_set_madmachine_priv = resp_payload;
+    resp_payload->has_resp = true;
+
+	type = req->cmd_set_madmachine_priv->type;
+
+	switch(type){
+		case ESP_HOSTED_MADMACHINE_PRIV_TYPE__Type_RECV:
+			ESP_LOGI(TAG, "madmachine recv data test");
+			break;
+		case ESP_HOSTED_MADMACHINE_PRIV_TYPE__Type_LED:
+			ESP_LOGI(TAG, "madmachine set led");
+			break;
+		default:
+			ESP_LOGE(TAG, "No support madmachine %d", type);
+       		goto err;
+			break;
+	}
+
+    resp_payload->has_resp = true;
+    resp_payload->resp = SUCCESS;
+    return ESP_OK;
+err:
+    resp_payload->resp = FAILURE;
+    return ESP_OK;
+}
+
+static esp_err_t cmd_get_madmachine_priv_handler (EspHostedConfigPayload *req,
+        EspHostedConfigPayload *resp, void *priv_data)
+{
+    esp_err_t ret = ESP_OK;
+    EspHostedMadMachinePrivType type = ESP_HOSTED_MADMACHINE_PRIV_TYPE__Type_RECV;
+    EspHostedRespGetMadMachinePriv *resp_payload = NULL;
+
+    if (!req || !resp) {
+        ESP_LOGE(TAG, "Invalid parameters");
+        return ESP_FAIL;
+    }
+
+    resp_payload = (EspHostedRespGetMadMachinePriv *)
+	       calloc(1,sizeof(EspHostedRespGetMadMachinePriv));
+    if (!resp_payload) {
+        ESP_LOGE(TAG,"Failed to allocate memory");
+        return ESP_ERR_NO_MEM;
+    }
+
+    esp_hosted_resp_get_madmachine_priv__init(resp_payload);
+    resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_SET_MADMACHINE_PRIV;
+    resp->resp_get_madmachine_priv = resp_payload;
+    resp_payload->has_resp = true;
+
+	type = req->cmd_get_madmachine_priv->type;
+
+	switch(type){
+		case ESP_HOSTED_MADMACHINE_PRIV_TYPE__Type_RECV:
+			ESP_LOGI(TAG, "madmachine recv data test");
+			break;
+		case ESP_HOSTED_MADMACHINE_PRIV_TYPE__Type_LED:
+			ESP_LOGI(TAG, "madmachine get led");
+			break;
+		default:
+			ESP_LOGE(TAG, "No support madmachine %d", type);
+       		goto err;
+			break;
+	}
+	resp_payload->type = type;
+    resp_payload->has_resp = true;
+    resp_payload->resp = SUCCESS;
+    return ESP_OK;
+err:
+    resp_payload->resp = FAILURE;
+    return ESP_OK;
+}
+
+
 static esp_hosted_config_cmd_t cmd_table[] = {
     {
         .cmd_num = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetMACAddress ,
@@ -1749,6 +1844,14 @@ static esp_hosted_config_cmd_t cmd_table[] = {
     },
     {
         .cmd_num = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetWiFiCurrTXPower,
+        .command_handler = cmd_get_wifi_curr_tx_power_handler
+    },
+    {
+        .cmd_num = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdSetMadMachinePriv,
+        .command_handler = cmd_set_madmachine_priv_handler
+    },
+    {
+        .cmd_num = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetMadMachinePriv,
         .command_handler = cmd_get_wifi_curr_tx_power_handler
     },
 };

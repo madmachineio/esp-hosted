@@ -52,9 +52,21 @@ typedef struct _EspHostedRespSetWiFiMAXTXPower EspHostedRespSetWiFiMAXTXPower;
 typedef struct _EspHostedCmdGetWiFiCurrTXPower EspHostedCmdGetWiFiCurrTXPower;
 typedef struct _EspHostedRespGetWiFiCurrTXPower EspHostedRespGetWiFiCurrTXPower;
 typedef struct _EspHostedConfigPayload EspHostedConfigPayload;
+typedef struct _EspHostedCmdGetMadMachinePriv EspHostedCmdGetMadMachinePriv;
+typedef struct _EspHostedRespGetMadMachinePriv EspHostedRespGetMadMachinePriv;
+typedef struct _EspHostedCmdSetMadMachinePriv EspHostedCmdSetMadMachinePriv;
+typedef struct _EspHostedRespSetMadMachinePriv EspHostedRespSetMadMachinePriv;
+
 
 
 /* --- enums --- */
+
+typedef enum _EspHostedMadMachinePrivType {
+  ESP_HOSTED_MADMACHINE_PRIV_TYPE__Type_RECV = 0,
+  ESP_HOSTED_MADMACHINE_PRIV_TYPE__Type_LED = 1
+    PROTOBUF_C__FORCE_ENUM_TO_BE_INT_SIZE(ESP_HOSTED_MADMACHINEPRIV_TYPE)
+} EspHostedMadMachinePrivType;
+
 
 typedef enum _EspHostedEncryptionMode {
   ESP_HOSTED_ENCRYPTION_MODE__Type_Open = 0,
@@ -129,7 +141,11 @@ typedef enum _EspHostedConfigMsgType {
   ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdSetWiFiMAXTXPower = 36,
   ESP_HOSTED_CONFIG_MSG_TYPE__TypeRespSetWiFiMAXTXPower = 37,
   ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetWiFiCurrTXPower = 38,
-  ESP_HOSTED_CONFIG_MSG_TYPE__TypeRespGetWiFiCurrTXPower = 39
+  ESP_HOSTED_CONFIG_MSG_TYPE__TypeRespGetWiFiCurrTXPower = 39,
+  ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdSetMadMachinePriv = 40,
+  ESP_HOSTED_CONFIG_MSG_TYPE__TypeRespSetMadMachinePriv = 41,
+  ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetMadMachinePriv = 42,
+  ESP_HOSTED_CONFIG_MSG_TYPE__TypeRespMadMachinePriv = 43
     PROTOBUF_C__FORCE_ENUM_TO_BE_INT_SIZE(ESP_HOSTED_CONFIG_MSG_TYPE)
 } EspHostedConfigMsgType;
 
@@ -584,6 +600,50 @@ struct  _EspHostedRespGetWiFiCurrTXPower
     , 0,0, 0,0 }
 
 
+struct  _EspHostedCmdGetMadMachinePriv
+{
+  ProtobufCMessage base;
+  EspHostedMadMachinePrivType type;
+};
+#define ESP_HOSTED_CMD_GET_MADMACHINE_PRIV__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&esp_hosted_cmd_get_madmachine_priv__descriptor) \
+     0 }
+
+
+struct  _EspHostedRespGetMadMachinePriv
+{
+  ProtobufCMessage base;
+  EspHostedMadMachinePrivType type;
+  ProtobufCBinaryData data;
+  int32_t resp;
+};
+#define ESP_HOSTED_RESP_GET_MADMACHINE_PRIV__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&esp_hosted_resp_get_madmachine_priv__descriptor) \
+    , 0, {0,NULL}, 0 }
+
+
+struct  _EspHostedCmdSetMadMachinePriv
+{
+  ProtobufCMessage base;
+  EspHostedMadMachinePrivType type;
+  ProtobufCBinaryData data;
+};
+#define ESP_HOSTED_CMD_SET_MADMACHINE_PRIV__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&esp_hosted_cmd_set_madmachine_priv__descriptor) \
+    , 0, {0,NULL}, 0 }
+    
+struct	_EspHostedRespSetMadMachinePriv
+{
+  ProtobufCMessage base;
+  protobuf_c_boolean has_resp;
+  int32_t resp;
+};
+#define ESP_HOSTED_RESP_SET_MADMACHINE_PRIV__INIT \
+	 { PROTOBUF_C_MESSAGE_INIT (&esp_hosted_resp_set_madmachine_priv__descriptor) \
+		, 0,0 }
+
+
+
 typedef enum {
   ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD__NOT_SET = 0,
   ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_GET_MAC_ADDRESS = 10,
@@ -626,6 +686,10 @@ typedef enum {
   ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_SET_WIFI_MAX_TX_POWER = 47,
   ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_GET_WIFI_CURR_TX_POWER = 48,
   ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_GET_WIFI_CURR_TX_POWER = 49,
+  ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_GET_MADMACHINE_PRIV = 50,
+  ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_GET_MADMACHINE_PRIV = 51,
+  ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_SET_MADMACHINE_PRIV = 52,
+  ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_SET_MADMACHINE_PRIV = 53,
 } EspHostedConfigPayload__PayloadCase;
 
 struct  _EspHostedConfigPayload
@@ -675,6 +739,10 @@ struct  _EspHostedConfigPayload
     EspHostedRespSetWiFiMAXTXPower *resp_set_wifi_max_tx_power;
     EspHostedCmdGetWiFiCurrTXPower *cmd_get_wifi_curr_tx_power;
     EspHostedRespGetWiFiCurrTXPower *resp_get_wifi_curr_tx_power;
+	EspHostedCmdGetMadMachinePriv *cmd_get_madmachine_priv;
+	EspHostedRespGetMadMachinePriv *resp_get_madmachine_priv;
+	EspHostedCmdSetMadMachinePriv *cmd_set_madmachine_priv;
+	EspHostedRespSetMadMachinePriv *resp_set_madmachine_priv;
   };
 };
 #define ESP_HOSTED_CONFIG_PAYLOAD__INIT \
@@ -1385,6 +1453,27 @@ EspHostedConfigPayload *
 void   esp_hosted_config_payload__free_unpacked
                      (EspHostedConfigPayload *message,
                       ProtobufCAllocator *allocator);
+
+/* EspHostedCmdSetMadMachinePriv methods */
+void   esp_hosted_resp_set_madmachine_priv__init
+                     (EspHostedRespSetMadMachinePriv         *message);
+size_t esp_hosted_resp_set_madmachine_priv__get_packed_size
+                     (const EspHostedRespSetMadMachinePriv   *message);
+size_t esp_hosted_resp_set_madmachine_priv__pack
+                     (const EspHostedRespSetMadMachinePriv   *message,
+                      uint8_t             *out);
+size_t esp_hosted_resp_set_madmachine_priv__pack_to_buffer
+                     (const EspHostedRespSetMadMachinePriv   *message,
+                      ProtobufCBuffer     *buffer);
+EspHostedRespSetMadMachinePriv *
+       esp_hosted_resp_set_madmachine_priv__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data);
+void   esp_hosted_resp_set_madmachine_priv__free_unpacked
+                     (EspHostedRespSetMadMachinePriv *message,
+                      ProtobufCAllocator *allocator);
+
 /* --- per-message closures --- */
 
 typedef void (*EspHostedCmdGetMacAddress_Closure)
@@ -1498,6 +1587,22 @@ typedef void (*EspHostedRespGetWiFiCurrTXPower_Closure)
 typedef void (*EspHostedConfigPayload_Closure)
                  (const EspHostedConfigPayload *message,
                   void *closure_data);
+
+typedef void (*EspHostedCmdSetMadMachinePriv_Closure)
+                 (const EspHostedCmdSetMadMachinePriv *message,
+                  void *closure_data);
+typedef void (*EspHostedRespGetMadMachinePriv_Closure)
+                 (const EspHostedRespGetMadMachinePriv *message,
+                  void *closure_data);
+typedef void (*EspHostedCmdSetMadMachinePriv_Closure)
+                 (const EspHostedCmdSetMadMachinePriv *message,
+                  void *closure_data);
+typedef void (*EspHostedRespSetMadMachinePriv_Closure)
+                 (const EspHostedRespSetMadMachinePriv *message,
+                  void *closure_data);
+
+
+
 
 /* --- services --- */
 

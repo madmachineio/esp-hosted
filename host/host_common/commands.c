@@ -1449,6 +1449,7 @@ err2:
     return FAILURE;
 }
 
+
 // Function performs an OTA begin for ESP32
 int esp_ota_begin()
 {
@@ -1636,6 +1637,12 @@ err1:
 err2:
     mem_free(tx_data);
     return FAILURE;
+}
+
+// Function for madmachine priv cmd
+int esp_madmachine_set_priv(int type, void *data, int len)
+{
+	
 }
 
 #ifndef STM32F469xx

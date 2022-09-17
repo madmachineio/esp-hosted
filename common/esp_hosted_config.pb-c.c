@@ -1598,6 +1598,83 @@ void   esp_hosted_config_payload__free_unpacked
   assert(message->base.descriptor == &esp_hosted_config_payload__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
+
+
+/* EspHostedCmdSetMadMachinePriv methods */
+void   esp_hosted_resp_set_madmachine_priv__init
+                     (EspHostedRespSetMadMachinePriv         *message)
+{
+}
+
+size_t esp_hosted_resp_set_madmachine_priv__get_packed_size
+                     (const EspHostedRespSetMadMachinePriv   *message)
+{
+}
+
+size_t esp_hosted_resp_set_madmachine_priv__pack
+                     (const EspHostedRespSetMadMachinePriv   *message,
+                      uint8_t             *out)
+{
+}
+
+size_t esp_hosted_resp_set_madmachine_priv__pack_to_buffer
+                     (const EspHostedRespSetMadMachinePriv   *message,
+                      ProtobufCBuffer     *buffer)
+{
+}
+
+EspHostedRespSetMadMachinePriv *
+       esp_hosted_resp_set_madmachine_priv__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data)
+{
+}
+
+void   esp_hosted_resp_set_madmachine_priv__free_unpacked
+                     (EspHostedRespSetMadMachinePriv *message,
+                      ProtobufCAllocator *allocator)
+{
+}
+
+/* EspHostedCmdGetMadMachinePriv methods */
+void   esp_hosted_resp_get_madmachine_priv__init
+                     (EspHostedRespGetMadMachinePriv         *message)
+{
+}
+
+size_t esp_hosted_resp_get_madmachine_priv__get_packed_size
+                     (const EspHostedRespGetMadMachinePriv   *message)
+{
+}
+
+size_t esp_hosted_resp_get_madmachine_priv__pack
+                     (const EspHostedRespGetMadMachinePriv   *message,
+                      uint8_t             *out)
+{
+}
+
+size_t esp_hosted_resp_get_madmachine_priv__pack_to_buffer
+                     (const EspHostedRespGetMadMachinePriv   *message,
+                      ProtobufCBuffer     *buffer)
+{
+}
+
+EspHostedRespGetMadMachinePriv *
+       esp_hosted_resp_get_madmachine_priv__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data)
+{
+}
+
+void   esp_hosted_resp_get_madmachine_priv__free_unpacked
+                     (EspHostedRespGetMadMachinePriv *message,
+                      ProtobufCAllocator *allocator)
+{
+}
+
+
 static const ProtobufCFieldDescriptor esp_hosted_cmd_get_mac_address__field_descriptors[1] =
 {
   {
@@ -3977,6 +4054,22 @@ const ProtobufCEnumDescriptor esp_hosted_ieid__descriptor =
   esp_hosted_ieid__value_ranges,
   NULL,NULL,NULL,NULL   /* reserved[1234] */
 };
+const ProtobufCMessageDescriptor esp_hosted_cmd_get_madmachine_priv__descriptor =
+{
+  PROTOBUF_C__MESSAGE_DESCRIPTOR_MAGIC,
+  "EspHostedRespGetWiFiCurrTXPower",
+  "EspHostedRespGetWiFiCurrTXPower",
+  "EspHostedRespGetWiFiCurrTXPower",
+  "",
+  sizeof(EspHostedRespGetWiFiCurrTXPower),
+  2,
+  esp_hosted_resp_get_madmachine_priv__field_descriptors,
+  esp_hosted_resp_get_madmachine_priv__field_indices_by_name,
+  1,  esp_hosted_resp_get_madmachine_priv__number_ranges,
+  (ProtobufCMessageInit) esp_hosted_resp_get_madmachine_priv__init,
+  NULL,NULL,NULL    /* reserved[123] */
+};
+
 static const ProtobufCEnumValue esp_hosted_config_msg_type__enum_values_by_number[40] =
 {
   { "TypeCmdGetMACAddress", "ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetMACAddress", 0 },
