@@ -109,7 +109,6 @@ int wifi_get_mac (int mode, char *mac)
     }
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetMACAddress;
     req.payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_GET_MAC_ADDRESS ;
 
@@ -121,7 +120,6 @@ int wifi_get_mac (int mode, char *mac)
     }
 
     esp_hosted_cmd_get_mac_address__init(req_payload);
-    req_payload->has_mode = true;
     req_payload->mode = mode;
     req.cmd_get_mac_address = req_payload;
     tx_len = esp_hosted_config_payload__get_packed_size(&req);
@@ -193,7 +191,6 @@ int wifi_set_mac (int mode, char *mac)
     }
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdSetMacAddress;
     req.payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_SET_MAC_ADDRESS;
 
@@ -205,9 +202,7 @@ int wifi_set_mac (int mode, char *mac)
     }
 
     esp_hosted_cmd_set_mac_address__init(req_payload);
-    req_payload->has_mode = true;
     req_payload->mode = mode;
-    req_payload->has_mac = true;
     req_payload->mac.len = min(strlen(mac), MAC_LENGTH);
     req_payload->mac.data = (uint8_t *)mac;
     req.cmd_set_mac_address = req_payload;
@@ -272,7 +267,6 @@ int wifi_get_mode (int *mode)
     }
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetWiFiMode;
 
     tx_len = esp_hosted_config_payload__get_packed_size(&req);
@@ -333,7 +327,6 @@ int wifi_set_mode (int mode)
     }
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdSetWiFiMode;
     req.payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_SET_WIFI_MODE;
 
@@ -345,7 +338,6 @@ int wifi_set_mode (int mode)
     }
 
     esp_hosted_cmd_set_mode__init(req_payload);
-    req_payload->has_mode = true;
     req_payload->mode = mode;
     req.cmd_set_wifi_mode = req_payload;
 
@@ -422,7 +414,6 @@ int wifi_set_ap_config (esp_hosted_control_config_t ap_config)
     }
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdSetAPConfig ;
     req.payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_SET_AP_CONFIG;
 
@@ -437,9 +428,7 @@ int wifi_set_ap_config (esp_hosted_control_config_t ap_config)
     req_payload->ssid  = (char *)&ap_config.station.ssid;
     req_payload->pwd   = (char *)&ap_config.station.pwd;
     req_payload->bssid = (char *)&ap_config.station.bssid;
-    req_payload->has_is_wpa3_supported = true;
     req_payload->is_wpa3_supported = ap_config.station.is_wpa3_supported;
-    req_payload->has_listen_interval = true;
     req_payload->listen_interval = ap_config.station.listen_interval;
     req.cmd_set_ap_config = req_payload;
 
@@ -520,7 +509,6 @@ int wifi_get_ap_config (esp_hosted_control_config_t *ap_config)
 
     esp_hosted_config_payload__init (&req);
 
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetAPConfig ;
 
     tx_len = esp_hosted_config_payload__get_packed_size(&req);
@@ -605,7 +593,6 @@ int wifi_disconnect_ap ()
     uint8_t *tx_data = NULL, *rx_data = NULL;
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdDisconnectAP;
 
     tx_len = esp_hosted_config_payload__get_packed_size(&req);
@@ -701,7 +688,6 @@ int wifi_set_softap_config (esp_hosted_control_config_t softap_config)
     }
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdSetSoftAPConfig;
     req.payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_SET_SOFTAP_CONFIG;
 
@@ -715,15 +701,10 @@ int wifi_set_softap_config (esp_hosted_control_config_t softap_config)
     esp_hosted_cmd_set_soft_apconfig__init(req_payload);
     req_payload->ssid = (char *)&softap_config.softap.ssid;
     req_payload->pwd = (char *)&softap_config.softap.pwd;
-    req_payload->has_chnl = true;
     req_payload->chnl = softap_config.softap.channel;
-    req_payload->has_ecn = true;
     req_payload->ecn = softap_config.softap.encryption_mode;
-    req_payload->has_max_conn = true;
     req_payload->max_conn = softap_config.softap.max_connections;
-    req_payload->has_ssid_hidden = true;
     req_payload->ssid_hidden = softap_config.softap.ssid_hidden;
-    req_payload->has_bw = true;
     req_payload->bw = softap_config.softap.bandwidth;
     req.cmd_set_softap_config = req_payload;
 
@@ -788,7 +769,6 @@ int wifi_get_softap_config (esp_hosted_control_config_t *softap_config)
     }
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetSoftAPConfig;
     tx_len = esp_hosted_config_payload__get_packed_size(&req);
     if (!tx_len) {
@@ -859,7 +839,6 @@ int wifi_stop_softap ()
     uint8_t *tx_data = NULL, *rx_data = NULL;
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdStopSoftAP;
 
     tx_len = esp_hosted_config_payload__get_packed_size(&req);
@@ -923,7 +902,6 @@ esp_hosted_wifi_scanlist_t* wifi_ap_scan_list (int *count)
     }
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetAPScanList;
     tx_len = esp_hosted_config_payload__get_packed_size(&req);
     if (!tx_len) {
@@ -1013,7 +991,6 @@ esp_hosted_wifi_connected_stations_list* wifi_connected_stations_list(int *num)
     }
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetConnectedSTAList;
 
     tx_len = esp_hosted_config_payload__get_packed_size(&req);
@@ -1091,7 +1068,6 @@ int wifi_set_power_save_mode (int power_save_mode)
     }
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdSetPowerSaveMode;
     req.payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_SET_POWER_SAVE_MODE;
 
@@ -1103,7 +1079,6 @@ int wifi_set_power_save_mode (int power_save_mode)
     }
 
     esp_hosted_cmd_set_mode__init(req_payload);
-    req_payload->has_mode = true;
     req_payload->mode = power_save_mode;
     req.cmd_set_power_save_mode = req_payload;
     tx_len = esp_hosted_config_payload__get_packed_size(&req);
@@ -1167,7 +1142,6 @@ int wifi_get_power_save_mode (int *power_save_mode)
     }
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetPowerSaveMode;
     req.payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_GET_POWER_SAVE_MODE;
     *power_save_mode = WIFI_PS_INVALID;
@@ -1240,7 +1214,6 @@ int wifi_set_vendor_specific_ie(bool enable, wifi_vendor_ie_type_t type,
     }
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdSetVendorSpecificIE;
     req.payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_SET_VENDOR_SPECIFIC_IE;
 
@@ -1251,13 +1224,9 @@ int wifi_set_vendor_specific_ie(bool enable, wifi_vendor_ie_type_t type,
         return FAILURE;
     }
     esp_hosted_cmd_set_vendor_specific_ie__init(req_payload);
-    req_payload->has_enable = true;
     req_payload->enable = enable; 
-    req_payload->has_type = true;
     req_payload->type = type;
-    req_payload->has_idx = true;
     req_payload->idx = idx;
-    req_payload->has_vendor_ie_data = true;
     req_payload->vendor_ie_data.len = vnd_ie_size;
     req_payload->vendor_ie_data.data = vnd_ie;
     req.cmd_set_vendor_specific_ie = req_payload;
@@ -1316,7 +1285,6 @@ int wifi_set_max_tx_power(int8_t wifi_max_tx_power)
     uint8_t *tx_data = NULL, *rx_data = NULL;
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdSetWiFiMAXTXPower;
     req.payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_SET_WIFI_MAX_TX_POWER;
 
@@ -1328,7 +1296,6 @@ int wifi_set_max_tx_power(int8_t wifi_max_tx_power)
     }
 
     esp_hosted_cmd_set_wi_fi_maxtxpower__init(req_payload);
-    req_payload->has_wifi_max_tx_power = true;
     req_payload->wifi_max_tx_power = wifi_max_tx_power;
     req.cmd_set_wifi_max_tx_power = req_payload;
 
@@ -1401,7 +1368,6 @@ int wifi_get_curr_tx_power(int8_t *wifi_curr_tx_power)
     }
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetWiFiCurrTXPower;
     req.payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_GET_WIFI_CURR_TX_POWER;
     tx_len = esp_hosted_config_payload__get_packed_size(&req);
@@ -1457,7 +1423,6 @@ int esp_ota_begin()
     uint8_t *tx_data = NULL, *rx_data = NULL;
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdOTABegin;
     req.payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_OTA_BEGIN;
     tx_len = esp_hosted_config_payload__get_packed_size(&req);
@@ -1518,7 +1483,6 @@ int esp_ota_write(uint8_t* ota_data, uint32_t ota_data_len)
     }
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdOTAWrite;
 
     req.payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_OTA_WRITE;
@@ -1530,7 +1494,6 @@ int esp_ota_write(uint8_t* ota_data, uint32_t ota_data_len)
         return FAILURE;
     }
     esp_hosted_cmd_otawrite__init(req_payload);
-    req_payload->has_ota_data = true;
     req_payload->ota_data.data = ota_data;
     req_payload->ota_data.len = ota_data_len;
     req.cmd_ota_write = req_payload;
@@ -1590,7 +1553,6 @@ int esp_ota_end()
     uint8_t *tx_data = NULL, *rx_data = NULL;
 
     esp_hosted_config_payload__init (&req);
-    req.has_msg = true;
     req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdOTAEnd;
     req.payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_OTA_END;
     tx_len = esp_hosted_config_payload__get_packed_size(&req);
@@ -1635,6 +1597,82 @@ err1:
     esp_hosted_config_payload__free_unpacked(resp, NULL);
 err2:
     mem_free(tx_data);
+    return FAILURE;
+}
+
+int mad_swift_set_priv (int type, char *payload, int32_t length)
+{
+    EspHostedConfigPayload req, *resp = NULL;
+    uint32_t tx_len = 0, rx_len = 0;
+    uint8_t *tx_data = NULL, *rx_data = NULL;
+
+    if (!payload || (type < MAD_SWIFT_PRIV_CUSTOM) || (type > MAD_SWIFT_PRIV_LED)) {
+        command_log("Invalid parameter\n");
+        return FAILURE;
+    }
+
+    esp_hosted_config_payload__init (&req);
+    req.msg = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdSetMadSwiftPriv;
+    req.payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_CMD_SET_MAD_SWIFT_PRIV;
+
+    EspHostedCmdSetMadSwiftPriv *req_payload = (EspHostedCmdSetMadSwiftPriv*)
+        esp_hosted_calloc(1, sizeof(EspHostedCmdSetMadSwiftPriv));
+    if (!req_payload) {
+        command_log("Failed to allocate memory for req_payload\n");
+        return FAILURE;
+    }
+
+    esp_hosted_cmd_set_mad_swift_priv__init(req_payload);
+    req_payload->type = type;
+    req_payload->payload.len = length;
+    req_payload->payload.data = (uint8_t *)payload;
+	req_payload->len = length;
+    req.cmd_set_mad_swift_priv = req_payload;
+    tx_len = esp_hosted_config_payload__get_packed_size(&req);
+    if (!tx_len) {
+        command_log("Invalid tx length\n");
+        goto err3;
+    }
+
+    tx_data = (uint8_t *)esp_hosted_calloc(1, tx_len);
+    if (!tx_data) {
+        command_log("Failed to allocate memory for tx_data\n");
+        goto err3;
+    }
+
+    esp_hosted_config_payload__pack(&req, tx_data);
+
+    rx_data = transport_pserial_data_handler(tx_data, tx_len,
+            TIMEOUT_PSERIAL_RESP, &rx_len);
+    if (!rx_data || !rx_len) {
+        command_log("Failed to process rx_data\n");
+        goto err2;
+    }
+
+    resp = esp_hosted_config_payload__unpack(NULL, rx_len, rx_data);
+    if ((!resp) || (!resp->resp_set_mad_swift_priv)) {
+        command_log("Failed to unpack rx_data\n");
+        goto err1;
+    }
+
+    if (resp->resp_set_mad_swift_priv->resp) {
+        command_log("Failed to set mad swift priv \n");
+        goto err1;
+    }
+
+    mem_free(tx_data);
+    mem_free(rx_data);
+    mem_free(req_payload);
+    esp_hosted_config_payload__free_unpacked(resp, NULL);
+    return SUCCESS;
+
+err1:
+    mem_free(rx_data);
+    esp_hosted_config_payload__free_unpacked(resp, NULL);
+err2:
+    mem_free(tx_data);
+err3:
+    mem_free(req_payload);
     return FAILURE;
 }
 

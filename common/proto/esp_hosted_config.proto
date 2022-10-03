@@ -206,6 +206,21 @@ message EspHostedRespGetWiFiCurrTXPower {
     int32 resp = 2;
 }
 
+enum EspHostedMadSwiftPrivType {
+    MAD_SWIFT_PRIV_TYPE_CUSTOM = 0;
+    MAD_SWIFT_PRIV_TYPE_LED_SET = 1;
+}
+
+message EspHostedCmdSetMadSwiftPriv {
+    EspHostedMadSwiftPrivType type = 1;
+    bytes payload = 2;
+    int32 len = 3;
+}
+
+message EspHostedRespSetMadSwiftPriv {
+    int32 resp = 1;
+}
+
 enum EspHostedConfigMsgType {
     TypeCmdGetMACAddress = 0;
     TypeRespGetMACAddress = 1;
@@ -247,6 +262,8 @@ enum EspHostedConfigMsgType {
     TypeRespSetWiFiMAXTXPower = 37;
     TypeCmdGetWiFiCurrTXPower = 38;
     TypeRespGetWiFiCurrTXPower = 39;
+    TypeCmdSetMadSwiftPriv = 40;
+    TypeRespSetMadSwiftPriv = 41;
 }
 
 message EspHostedConfigPayload {
@@ -292,5 +309,7 @@ message EspHostedConfigPayload {
         EspHostedRespSetWiFiMAXTXPower resp_set_wifi_max_tx_power = 47;
         EspHostedCmdGetWiFiCurrTXPower cmd_get_wifi_curr_tx_power = 48;
         EspHostedRespGetWiFiCurrTXPower resp_get_wifi_curr_tx_power = 49;
+        EspHostedCmdSetMadSwiftPriv cmd_set_mad_swift_priv =50;
+        EspHostedRespSetMadSwiftPriv resp_set_mad_swift_priv =51;
     }
 }

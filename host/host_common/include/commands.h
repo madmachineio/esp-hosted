@@ -22,6 +22,13 @@
 #define OUT_OF_RANGE            5
 
 typedef enum {
+    MAD_SWIFT_PRIV_CUSTOM = 0,
+    MAD_SWIFT_PRIV_LED,
+    MAD_SWIFT_PRIV_MAX
+} mad_swift_priv_t;
+
+
+typedef enum {
     WIFI_MODE_NONE = 0,  /**< null mode */
     WIFI_MODE_STA,       /**< WiFi station mode */
     WIFI_MODE_AP,        /**< WiFi soft-AP mode */
@@ -351,6 +358,9 @@ int esp_ota_write(uint8_t* ota_data, uint32_t ota_data_len);
  * returns SUCCESS(0) or FAILURE(-1)
  */
 int esp_ota_end();
+
+int mad_swift_set_priv (int type, char *payload, int32_t length);
+
 
 #ifndef STM32F469xx
 /*

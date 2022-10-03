@@ -691,6 +691,8 @@ void app_main()
 	}
 	ESP_ERROR_CHECK( ret );
 
+	mad_swift_hw_init();
+
 #ifdef CONFIG_BT_ENABLED
 	initialise_bluetooth();
 

@@ -20,6 +20,8 @@
 #include "slave_commands.h"
 #include "esp_hosted_config.pb-c.h"
 #include "esp_ota_ops.h"
+#include "driver/rmt.h"
+#include "led_strip.h"
 
 #define MAC_STR_LEN                 17
 #define MAC2STR(a)                  (a)[0], (a)[1], (a)[2], (a)[3], (a)[4], (a)[5]
@@ -276,7 +278,6 @@ static esp_err_t cmd_get_mac_address_handler(EspHostedConfigPayload *req,
     esp_hosted_resp_get_mac_address__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_GET_MAC_ADDRESS;
     resp->resp_get_mac_address = resp_payload;
-    resp_payload->has_resp = true;
 
     if (req->cmd_get_mac_address->mode == WIFI_MODE_STA) {
         ret = esp_wifi_get_mac(ESP_IF_WIFI_STA , mac);
@@ -310,7 +311,6 @@ static esp_err_t cmd_get_mac_address_handler(EspHostedConfigPayload *req,
         ESP_LOGE(TAG, "Failed to allocate memory for MAC address");
         goto err;
     }
-    resp_payload->has_mac = true;
 
     resp_payload->resp = SUCCESS;
     return ESP_OK;
@@ -340,7 +340,6 @@ static esp_err_t cmd_get_wifi_mode_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_get_mode__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_GET_WIFI_MODE;
     resp->resp_get_wifi_mode = resp_payload;
-    resp_payload->has_resp = true;
 
     ret = esp_wifi_get_mode(&mode);
     if (ret) {
@@ -348,7 +347,6 @@ static esp_err_t cmd_get_wifi_mode_handler (EspHostedConfigPayload *req,
         goto err;
     }
 
-    resp_payload->has_mode = true;
     resp_payload->mode = mode;
     resp_payload->resp = SUCCESS;
     return ESP_OK;
@@ -383,7 +381,6 @@ static esp_err_t cmd_set_wifi_mode_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_set_mode__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_SET_WIFI_MODE;
     resp->resp_set_wifi_mode = resp_payload;
-    resp_payload->has_resp = true;
 
     num = req->cmd_set_wifi_mode->mode;
     ret = esp_wifi_set_mode(num);
@@ -537,7 +534,6 @@ err:
         resp_payload->resp = FAILURE;
     }
 err1:
-    resp_payload->has_resp = true;
     if (event_registered) {
         station_event_unregister();
         vEventGroupDelete(wifi_event_group);
@@ -576,7 +572,6 @@ static esp_err_t cmd_get_ap_config_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_get_apconfig__init (resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_GET_AP_CONFIG;
     resp->resp_get_ap_config = resp_payload;
-    resp_payload->has_resp = true;
 
     if (!station_connected) {
         ESP_LOGI(TAG,"ESP32 station is not connected with AP, can't get AP configuration");
@@ -627,13 +622,8 @@ static esp_err_t cmd_get_ap_config_handler (EspHostedConfigPayload *req,
         goto err;
     }
 
-    resp_payload->has_ssid = true;
-    resp_payload->has_bssid = true;
-    resp_payload->has_rssi = true;
     resp_payload->rssi = credentials.rssi;
-    resp_payload->has_chnl = true;
     resp_payload->chnl = credentials.chnl;
-    resp_payload->has_ecn = true;
     resp_payload->ecn = credentials.ecn;
     resp_payload->resp = SUCCESS;
 
@@ -662,7 +652,6 @@ static esp_err_t cmd_disconnect_ap_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_get_status__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_DISCONNECT_AP;
     resp->resp_disconnect_ap = resp_payload;
-    resp_payload->has_resp = true;
 
     if (!station_connected) {
         ESP_LOGI(TAG,"ESP32 station is not connected with AP, can't disconnect from AP");
@@ -708,7 +697,6 @@ static esp_err_t cmd_get_softap_config_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_get_soft_apconfig__init (resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_GET_SOFTAP_CONFIG;
     resp->resp_get_softap_config = resp_payload;
-    resp_payload->has_resp = true;
 
     if (!softap_started) {
         ESP_LOGI(TAG,"ESP32 SoftAP mode aren't set, So can't get config");
@@ -766,17 +754,10 @@ static esp_err_t cmd_get_softap_config_handler (EspHostedConfigPayload *req,
         ESP_LOGE(TAG, "Failed to allocate memory for password");
         goto err;
     }
-    resp_payload->has_ssid = true;
-    resp_payload->has_pwd = true;
-    resp_payload->has_chnl = true;
     resp_payload->chnl = credentials.chnl;
-    resp_payload->has_ecn = true;
     resp_payload->ecn = credentials.ecn;
-    resp_payload->has_max_conn = true;
     resp_payload->max_conn = credentials.max_conn;
-    resp_payload->has_ssid_hidden = true;
     resp_payload->ssid_hidden = credentials.ssid_hidden;
-    resp_payload->has_bw = true;
     resp_payload->bw = get_bw;
     resp_payload->resp = SUCCESS;
     return ESP_OK;
@@ -816,7 +797,6 @@ static esp_err_t cmd_set_softap_config_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_set_soft_apconfig__init (resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_SET_SOFTAP_CONFIG;
     resp->resp_set_softap_config = resp_payload;
-    resp_payload->has_resp = true;
 
     if ((req->cmd_set_softap_config->ssid) &&
         (strlen(req->cmd_set_softap_config->ssid) > SSID_LENGTH)) {
@@ -938,7 +918,6 @@ static esp_err_t cmd_get_ap_scan_list_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_scan_result__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_SCAN_AP_LIST;
     resp->resp_scan_ap_list = resp_payload;
-    resp_payload->has_resp = true;
 
     ap_scan_list_event_register();
     ret = esp_wifi_get_mode(&mode);
@@ -989,7 +968,6 @@ static esp_err_t cmd_get_ap_scan_list_handler (EspHostedConfigPayload *req,
     }
 
     credentials.count = ap_count;
-    resp_payload->has_count = true;
 
     results = (EspHostedScanResult **)
         calloc(credentials.count, sizeof(EspHostedScanResult));
@@ -1021,11 +999,8 @@ static esp_err_t cmd_get_ap_scan_list_handler (EspHostedConfigPayload *req,
             goto err;
         }
 
-        results[i]->has_ssid = true;
-        results[i]->has_chnl = true;
         credentials.chnl = ap_info[i].primary;
         results[i]->chnl = credentials.chnl;
-        results[i]->has_rssi = true;
         credentials.rssi = ap_info[i].rssi;
         results[i]->rssi = credentials.rssi;
 
@@ -1044,8 +1019,6 @@ static esp_err_t cmd_get_ap_scan_list_handler (EspHostedConfigPayload *req,
             goto err;
         }
 
-        results[i]->has_bssid = true;
-        results[i]->has_ecn = true;
         credentials.ecn = ap_info[i].authmode;
         results[i]->ecn = credentials.ecn;
         ESP_LOGI(TAG,"SSID      \t\t%s", results[i]->ssid.data);
@@ -1091,7 +1064,6 @@ static esp_err_t cmd_stop_softap_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_get_status__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_STOP_SOFTAP;
     resp->resp_stop_softap = resp_payload;
-    resp_payload->has_resp = true;
 
     if (!softap_started) {
         ESP_LOGI(TAG,"ESP32 softap is not started");
@@ -1158,7 +1130,6 @@ static esp_err_t get_connected_sta_list_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_connected_sta__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_CONNECTED_STAS_LIST;
     resp->resp_connected_stas_list = resp_payload;
-    resp_payload->has_resp = true;
 
     ret = esp_wifi_get_mode(&mode);
     if (ret) {
@@ -1184,7 +1155,6 @@ static esp_err_t get_connected_sta_list_handler (EspHostedConfigPayload *req,
     if (!stas_info->num) {
         ESP_LOGE(TAG,"No station is connected");
     }
-    resp_payload->has_num = true;
     resp_payload->num = stas_info->num;
     if (stas_info->num) {
         resp_payload->n_stations = stas_info->num;
@@ -1218,8 +1188,6 @@ static esp_err_t get_connected_sta_list_handler (EspHostedConfigPayload *req,
                 goto err;
             }
 
-            results[i]->has_mac = true;
-            results[i]->has_rssi = true;
             results[i]->rssi = stas_info->sta[i].rssi;
             ESP_LOGI(TAG,"MAC of %dth station %s",i, results[i]->mac.data);
         }
@@ -1259,7 +1227,6 @@ static esp_err_t cmd_set_mac_address_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_set_mac_address__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_SET_MAC_ADDRESS;
     resp->resp_set_mac_address = resp_payload;
-    resp_payload->has_resp = true;
 
     if (req->cmd_set_mac_address->mac.len > MAC_STR_LEN) {
         ESP_LOGE(TAG, "MAC address should be in aa:bb:cc:dd:ee:ff format");
@@ -1323,7 +1290,6 @@ static esp_err_t cmd_set_power_save_mode_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_set_mode__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_SET_POWER_SAVE_MODE;
     resp->resp_set_power_save_mode = resp_payload;
-    resp_payload->has_resp = true;
 
     /*
      * WIFI_PS_NONE mode can not use in case of coex i.e. Wi-Fi+BT/BLE.
@@ -1370,7 +1336,6 @@ static esp_err_t cmd_get_power_save_mode_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_get_mode__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_GET_POWER_SAVE_MODE;
     resp->resp_get_power_save_mode = resp_payload;
-    resp_payload->has_resp = true;
 
     ret = esp_wifi_get_ps(&ps_type);
     if (ret) {
@@ -1378,7 +1343,6 @@ static esp_err_t cmd_get_power_save_mode_handler (EspHostedConfigPayload *req,
         resp_payload->resp = FAILURE;
         return ESP_OK;
     } else {
-        resp->resp_get_power_save_mode->has_mode = true;
         resp->resp_get_power_save_mode->mode = ps_type;
     }
 
@@ -1409,7 +1373,6 @@ static esp_err_t cmd_ota_begin_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_otabegin__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_OTA_BEGIN;
     resp->resp_ota_begin = resp_payload;
-    resp_payload->has_resp = true;
 
     // Identify next OTA partition
     update_partition = esp_ota_get_next_update_partition(NULL);
@@ -1465,7 +1428,6 @@ static esp_err_t cmd_ota_write_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_otawrite__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_OTA_WRITE;
     resp->resp_ota_write = resp_payload;
-    resp_payload->has_resp = true;
 
     ota_ongoing=1;
 #if CONFIG_ESP_OTA_WORKAROUND
@@ -1509,7 +1471,6 @@ static esp_err_t cmd_ota_end_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_otaend__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_OTA_END;
     resp->resp_ota_end = resp_payload;
-    resp_payload->has_resp = true;
 
     ota_ongoing=1;
 #if CONFIG_ESP_OTA_WORKAROUND
@@ -1557,7 +1518,7 @@ static esp_err_t cmd_set_vender_specific_ie_handler (EspHostedConfigPayload *req
     esp_err_t ret = ESP_OK;
     EspHostedRespSetVendorSpecificIE *resp_payload = NULL;
 
-    if (!req || !resp || !req->cmd_set_vendor_specific_ie || 
+    if (!req || !resp || !req->cmd_set_vendor_specific_ie ||
         !req->cmd_set_vendor_specific_ie->vendor_ie_data.len ||
         !req->cmd_set_vendor_specific_ie->vendor_ie_data.data) {
         ESP_LOGE(TAG, "Invalid parameters");
@@ -1573,7 +1534,6 @@ static esp_err_t cmd_set_vender_specific_ie_handler (EspHostedConfigPayload *req
     esp_hosted_resp_set_vendor_specific_ie__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_SET_VENDOR_SPECIFIC_IE;
     resp->resp_set_vendor_specific_ie = resp_payload;
-    resp_payload->has_resp = true;
 
     ret = esp_wifi_set_vendor_ie(req->cmd_set_vendor_specific_ie->enable,
         req->cmd_set_vendor_specific_ie->type, req->cmd_set_vendor_specific_ie->idx,
@@ -1608,7 +1568,6 @@ static esp_err_t cmd_set_wifi_max_tx_power_handler (EspHostedConfigPayload *req,
     esp_hosted_resp_set_wi_fi_maxtxpower__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_SET_WIFI_MAX_TX_POWER;
     resp->resp_set_wifi_max_tx_power = resp_payload;
-    resp_payload->has_resp = true;
 
     if ((req->cmd_set_wifi_max_tx_power->wifi_max_tx_power > MAX_TX_POWER)
         || (req->cmd_set_wifi_max_tx_power->wifi_max_tx_power < MIN_TX_POWER)) {
@@ -1654,14 +1613,12 @@ static esp_err_t cmd_get_wifi_curr_tx_power_handler (EspHostedConfigPayload *req
     esp_hosted_resp_get_wi_fi_curr_txpower__init(resp_payload);
     resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_GET_WIFI_CURR_TX_POWER;
     resp->resp_get_wifi_curr_tx_power = resp_payload;
-    resp_payload->has_resp = true;
 
     ret = esp_wifi_get_max_tx_power(&power);
     if (ret != SUCCESS) {
         ESP_LOGE(TAG, "Failed to get TX power");
         goto err;
     }
-    resp_payload->has_wifi_curr_tx_power = true;
     resp_payload->wifi_curr_tx_power = power;
     resp_payload->resp = SUCCESS;
     return ESP_OK;
@@ -1669,6 +1626,76 @@ err:
     resp_payload->resp = FAILURE;
     return ESP_OK;
 }
+
+// Function sets mad swift priv
+led_strip_t *strip = NULL;
+void mad_swift_hw_init(void)
+{
+	#define CONFIG_EXAMPLE_RMT_TX_GPIO 8
+	#define CONFIG_EXAMPLE_STRIP_LED_NUMBER 1
+	#define EXAMPLE_CHASE_SPEED_MS 10
+	rmt_config_t config = RMT_DEFAULT_CONFIG_TX(CONFIG_EXAMPLE_RMT_TX_GPIO, RMT_CHANNEL_0);
+	config.clk_div = 2;
+	ESP_ERROR_CHECK(rmt_config(&config));
+	ESP_ERROR_CHECK(rmt_driver_install(config.channel, 0, 0));
+	led_strip_config_t strip_config = LED_STRIP_DEFAULT_CONFIG(CONFIG_EXAMPLE_STRIP_LED_NUMBER, (led_strip_dev_t)config.channel);
+	strip = led_strip_new_rmt_ws2812(&strip_config);
+	if (!strip) {
+		ESP_LOGE(TAG, "install WS2812 driver failed");
+	}
+
+}
+
+static esp_err_t cmd_set_mad_swift_priv_handler (EspHostedConfigPayload *req,
+                                EspHostedConfigPayload *resp, void *priv_data)
+{
+    EspHostedRespSetMadSwiftPriv *resp_payload = NULL;
+
+    if (!req || !resp || !req->cmd_set_mad_swift_priv) {
+        ESP_LOGE(TAG," Invalid command request");
+        return ESP_FAIL;
+    }
+
+    resp_payload = (EspHostedRespSetMadSwiftPriv *)
+                    calloc(1,sizeof(EspHostedRespSetMadSwiftPriv));
+    if (!resp_payload) {
+        ESP_LOGE(TAG,"Failed to allocate memory");
+        return ESP_ERR_NO_MEM;
+    }
+    esp_hosted_resp_set_mad_swift_priv__init(resp_payload);
+    resp->payload_case = ESP_HOSTED_CONFIG_PAYLOAD__PAYLOAD_RESP_SET_MAD_SWIFT_PRIV;
+    resp->resp_set_mad_swift_priv = resp_payload;
+
+	ESP_LOGI(TAG, "mad swift priv type %d", req->cmd_set_mad_swift_priv->type);
+	ESP_LOGI(TAG, "mad swift priv data %p", req->cmd_set_mad_swift_priv->payload.data);
+	ESP_LOGI(TAG, "mad swift priv data length %d", req->cmd_set_mad_swift_priv->payload.len);
+	switch(req->cmd_set_mad_swift_priv->type){
+		case 1:
+			{
+				uint32_t rgb;
+				memcpy(&rgb, req->cmd_set_mad_swift_priv->payload.data, 4);
+				if(strip){
+					ESP_ERROR_CHECK(strip->clear(strip, 100));
+					ESP_LOGI(TAG, "LED Rainbow Chase Start %x", rgb);
+					strip->set_pixel(strip, 0, (rgb>>16)&0xFF, (rgb>>8)&0xFF, rgb&0xff);
+					ESP_ERROR_CHECK(strip->refresh(strip, 100));
+		            //vTaskDelay(pdMS_TO_TICKS(EXAMPLE_CHASE_SPEED_MS));
+		            //strip->clear(strip, 50);
+		            //vTaskDelay(pdMS_TO_TICKS(EXAMPLE_CHASE_SPEED_MS));
+					ESP_LOGI(TAG, "LED Rainbow Chase End");
+				}else{
+					ESP_LOGE(TAG, "LED Strip not init");
+				}
+			}
+			break;
+		default:
+			break;
+	}
+
+    resp_payload->resp = SUCCESS;
+    return ESP_OK;
+}
+
 
 static esp_hosted_config_cmd_t cmd_table[] = {
     {
@@ -1750,6 +1777,10 @@ static esp_hosted_config_cmd_t cmd_table[] = {
     {
         .cmd_num = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetWiFiCurrTXPower,
         .command_handler = cmd_get_wifi_curr_tx_power_handler
+    },
+    {
+        .cmd_num = ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdSetMadSwiftPriv,
+        .command_handler = cmd_set_mad_swift_priv_handler
     },
 };
 
@@ -1912,6 +1943,10 @@ static void esp_hosted_config_cleanup(EspHostedConfigPayload *resp)
             mem_free(resp->resp_get_wifi_curr_tx_power);
             break;
         }
+        case (ESP_HOSTED_CONFIG_MSG_TYPE__TypeRespSetMadSwiftPriv) : {
+            mem_free(resp->resp_set_mad_swift_priv);
+            break;
+        }
         default:
             ESP_LOGE(TAG, "Unsupported response type");
             break;
@@ -1936,7 +1971,6 @@ esp_err_t data_transfer_handler(uint32_t session_id,const uint8_t *inbuf,
     }
 
     esp_hosted_config_payload__init (&resp);
-    resp.has_msg = true;
     resp.msg = req->msg + 1;
     ret = esp_hosted_config_command_dispatcher(req,&resp,NULL);
     if (ret) {

@@ -35,4 +35,5 @@ typedef struct {
 } credentials_t;
 
 esp_err_t data_transfer_handler(uint32_t session_id,const uint8_t *inbuf, ssize_t inlen,uint8_t **outbuf, ssize_t *outlen, void *priv_data);
+void mad_swift_hw_init(void);
 

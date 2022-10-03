@@ -10,7 +10,7 @@
 void   esp_hosted_cmd_get_mac_address__init
                      (EspHostedCmdGetMacAddress         *message)
 {
-  static EspHostedCmdGetMacAddress init_value = ESP_HOSTED_CMD_GET_MAC_ADDRESS__INIT;
+  static const EspHostedCmdGetMacAddress init_value = ESP_HOSTED_CMD_GET_MAC_ADDRESS__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_get_mac_address__get_packed_size
@@ -47,13 +47,15 @@ void   esp_hosted_cmd_get_mac_address__free_unpacked
                      (EspHostedCmdGetMacAddress *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_get_mac_address__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_get_mac_address__init
                      (EspHostedRespGetMacAddress         *message)
 {
-  static EspHostedRespGetMacAddress init_value = ESP_HOSTED_RESP_GET_MAC_ADDRESS__INIT;
+  static const EspHostedRespGetMacAddress init_value = ESP_HOSTED_RESP_GET_MAC_ADDRESS__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_get_mac_address__get_packed_size
@@ -90,13 +92,15 @@ void   esp_hosted_resp_get_mac_address__free_unpacked
                      (EspHostedRespGetMacAddress *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_get_mac_address__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_get_mode__init
                      (EspHostedCmdGetMode         *message)
 {
-  static EspHostedCmdGetMode init_value = ESP_HOSTED_CMD_GET_MODE__INIT;
+  static const EspHostedCmdGetMode init_value = ESP_HOSTED_CMD_GET_MODE__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_get_mode__get_packed_size
@@ -133,13 +137,15 @@ void   esp_hosted_cmd_get_mode__free_unpacked
                      (EspHostedCmdGetMode *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_get_mode__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_get_mode__init
                      (EspHostedRespGetMode         *message)
 {
-  static EspHostedRespGetMode init_value = ESP_HOSTED_RESP_GET_MODE__INIT;
+  static const EspHostedRespGetMode init_value = ESP_HOSTED_RESP_GET_MODE__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_get_mode__get_packed_size
@@ -176,13 +182,15 @@ void   esp_hosted_resp_get_mode__free_unpacked
                      (EspHostedRespGetMode *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_get_mode__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_set_mode__init
                      (EspHostedCmdSetMode         *message)
 {
-  static EspHostedCmdSetMode init_value = ESP_HOSTED_CMD_SET_MODE__INIT;
+  static const EspHostedCmdSetMode init_value = ESP_HOSTED_CMD_SET_MODE__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_set_mode__get_packed_size
@@ -219,13 +227,15 @@ void   esp_hosted_cmd_set_mode__free_unpacked
                      (EspHostedCmdSetMode *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_set_mode__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_set_mode__init
                      (EspHostedRespSetMode         *message)
 {
-  static EspHostedRespSetMode init_value = ESP_HOSTED_RESP_SET_MODE__INIT;
+  static const EspHostedRespSetMode init_value = ESP_HOSTED_RESP_SET_MODE__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_set_mode__get_packed_size
@@ -262,13 +272,15 @@ void   esp_hosted_resp_set_mode__free_unpacked
                      (EspHostedRespSetMode *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_set_mode__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_get_status__init
                      (EspHostedCmdGetStatus         *message)
 {
-  static EspHostedCmdGetStatus init_value = ESP_HOSTED_CMD_GET_STATUS__INIT;
+  static const EspHostedCmdGetStatus init_value = ESP_HOSTED_CMD_GET_STATUS__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_get_status__get_packed_size
@@ -305,13 +317,15 @@ void   esp_hosted_cmd_get_status__free_unpacked
                      (EspHostedCmdGetStatus *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_get_status__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_get_status__init
                      (EspHostedRespGetStatus         *message)
 {
-  static EspHostedRespGetStatus init_value = ESP_HOSTED_RESP_GET_STATUS__INIT;
+  static const EspHostedRespGetStatus init_value = ESP_HOSTED_RESP_GET_STATUS__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_get_status__get_packed_size
@@ -348,13 +362,15 @@ void   esp_hosted_resp_get_status__free_unpacked
                      (EspHostedRespGetStatus *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_get_status__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_set_mac_address__init
                      (EspHostedCmdSetMacAddress         *message)
 {
-  static EspHostedCmdSetMacAddress init_value = ESP_HOSTED_CMD_SET_MAC_ADDRESS__INIT;
+  static const EspHostedCmdSetMacAddress init_value = ESP_HOSTED_CMD_SET_MAC_ADDRESS__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_set_mac_address__get_packed_size
@@ -391,13 +407,15 @@ void   esp_hosted_cmd_set_mac_address__free_unpacked
                      (EspHostedCmdSetMacAddress *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_set_mac_address__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_set_mac_address__init
                      (EspHostedRespSetMacAddress         *message)
 {
-  static EspHostedRespSetMacAddress init_value = ESP_HOSTED_RESP_SET_MAC_ADDRESS__INIT;
+  static const EspHostedRespSetMacAddress init_value = ESP_HOSTED_RESP_SET_MAC_ADDRESS__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_set_mac_address__get_packed_size
@@ -434,13 +452,15 @@ void   esp_hosted_resp_set_mac_address__free_unpacked
                      (EspHostedRespSetMacAddress *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_set_mac_address__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_get_apconfig__init
                      (EspHostedCmdGetAPConfig         *message)
 {
-  static EspHostedCmdGetAPConfig init_value = ESP_HOSTED_CMD_GET_APCONFIG__INIT;
+  static const EspHostedCmdGetAPConfig init_value = ESP_HOSTED_CMD_GET_APCONFIG__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_get_apconfig__get_packed_size
@@ -477,13 +497,15 @@ void   esp_hosted_cmd_get_apconfig__free_unpacked
                      (EspHostedCmdGetAPConfig *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_get_apconfig__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_get_apconfig__init
                      (EspHostedRespGetAPConfig         *message)
 {
-  static EspHostedRespGetAPConfig init_value = ESP_HOSTED_RESP_GET_APCONFIG__INIT;
+  static const EspHostedRespGetAPConfig init_value = ESP_HOSTED_RESP_GET_APCONFIG__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_get_apconfig__get_packed_size
@@ -520,13 +542,15 @@ void   esp_hosted_resp_get_apconfig__free_unpacked
                      (EspHostedRespGetAPConfig *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_get_apconfig__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_set_apconfig__init
                      (EspHostedCmdSetAPConfig         *message)
 {
-  static EspHostedCmdSetAPConfig init_value = ESP_HOSTED_CMD_SET_APCONFIG__INIT;
+  static const EspHostedCmdSetAPConfig init_value = ESP_HOSTED_CMD_SET_APCONFIG__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_set_apconfig__get_packed_size
@@ -563,13 +587,15 @@ void   esp_hosted_cmd_set_apconfig__free_unpacked
                      (EspHostedCmdSetAPConfig *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_set_apconfig__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_set_apconfig__init
                      (EspHostedRespSetAPConfig         *message)
 {
-  static EspHostedRespSetAPConfig init_value = ESP_HOSTED_RESP_SET_APCONFIG__INIT;
+  static const EspHostedRespSetAPConfig init_value = ESP_HOSTED_RESP_SET_APCONFIG__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_set_apconfig__get_packed_size
@@ -606,13 +632,15 @@ void   esp_hosted_resp_set_apconfig__free_unpacked
                      (EspHostedRespSetAPConfig *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_set_apconfig__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_get_soft_apconfig__init
                      (EspHostedCmdGetSoftAPConfig         *message)
 {
-  static EspHostedCmdGetSoftAPConfig init_value = ESP_HOSTED_CMD_GET_SOFT_APCONFIG__INIT;
+  static const EspHostedCmdGetSoftAPConfig init_value = ESP_HOSTED_CMD_GET_SOFT_APCONFIG__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_get_soft_apconfig__get_packed_size
@@ -649,13 +677,15 @@ void   esp_hosted_cmd_get_soft_apconfig__free_unpacked
                      (EspHostedCmdGetSoftAPConfig *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_get_soft_apconfig__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_get_soft_apconfig__init
                      (EspHostedRespGetSoftAPConfig         *message)
 {
-  static EspHostedRespGetSoftAPConfig init_value = ESP_HOSTED_RESP_GET_SOFT_APCONFIG__INIT;
+  static const EspHostedRespGetSoftAPConfig init_value = ESP_HOSTED_RESP_GET_SOFT_APCONFIG__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_get_soft_apconfig__get_packed_size
@@ -692,13 +722,15 @@ void   esp_hosted_resp_get_soft_apconfig__free_unpacked
                      (EspHostedRespGetSoftAPConfig *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_get_soft_apconfig__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_set_soft_apconfig__init
                      (EspHostedCmdSetSoftAPConfig         *message)
 {
-  static EspHostedCmdSetSoftAPConfig init_value = ESP_HOSTED_CMD_SET_SOFT_APCONFIG__INIT;
+  static const EspHostedCmdSetSoftAPConfig init_value = ESP_HOSTED_CMD_SET_SOFT_APCONFIG__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_set_soft_apconfig__get_packed_size
@@ -735,13 +767,15 @@ void   esp_hosted_cmd_set_soft_apconfig__free_unpacked
                      (EspHostedCmdSetSoftAPConfig *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_set_soft_apconfig__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_set_soft_apconfig__init
                      (EspHostedRespSetSoftAPConfig         *message)
 {
-  static EspHostedRespSetSoftAPConfig init_value = ESP_HOSTED_RESP_SET_SOFT_APCONFIG__INIT;
+  static const EspHostedRespSetSoftAPConfig init_value = ESP_HOSTED_RESP_SET_SOFT_APCONFIG__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_set_soft_apconfig__get_packed_size
@@ -778,13 +812,15 @@ void   esp_hosted_resp_set_soft_apconfig__free_unpacked
                      (EspHostedRespSetSoftAPConfig *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_set_soft_apconfig__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_scan_result__init
                      (EspHostedScanResult         *message)
 {
-  static EspHostedScanResult init_value = ESP_HOSTED_SCAN_RESULT__INIT;
+  static const EspHostedScanResult init_value = ESP_HOSTED_SCAN_RESULT__INIT;
   *message = init_value;
 }
 size_t esp_hosted_scan_result__get_packed_size
@@ -821,13 +857,15 @@ void   esp_hosted_scan_result__free_unpacked
                      (EspHostedScanResult *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_scan_result__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_scan_result__init
                      (EspHostedCmdScanResult         *message)
 {
-  static EspHostedCmdScanResult init_value = ESP_HOSTED_CMD_SCAN_RESULT__INIT;
+  static const EspHostedCmdScanResult init_value = ESP_HOSTED_CMD_SCAN_RESULT__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_scan_result__get_packed_size
@@ -864,13 +902,15 @@ void   esp_hosted_cmd_scan_result__free_unpacked
                      (EspHostedCmdScanResult *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_scan_result__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_scan_result__init
                      (EspHostedRespScanResult         *message)
 {
-  static EspHostedRespScanResult init_value = ESP_HOSTED_RESP_SCAN_RESULT__INIT;
+  static const EspHostedRespScanResult init_value = ESP_HOSTED_RESP_SCAN_RESULT__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_scan_result__get_packed_size
@@ -907,13 +947,15 @@ void   esp_hosted_resp_scan_result__free_unpacked
                      (EspHostedRespScanResult *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_scan_result__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_connected_stalist__init
                      (EspHostedConnectedSTAList         *message)
 {
-  static EspHostedConnectedSTAList init_value = ESP_HOSTED_CONNECTED_STALIST__INIT;
+  static const EspHostedConnectedSTAList init_value = ESP_HOSTED_CONNECTED_STALIST__INIT;
   *message = init_value;
 }
 size_t esp_hosted_connected_stalist__get_packed_size
@@ -950,13 +992,15 @@ void   esp_hosted_connected_stalist__free_unpacked
                      (EspHostedConnectedSTAList *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_connected_stalist__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_connected_sta__init
                      (EspHostedCmdConnectedSTA         *message)
 {
-  static EspHostedCmdConnectedSTA init_value = ESP_HOSTED_CMD_CONNECTED_STA__INIT;
+  static const EspHostedCmdConnectedSTA init_value = ESP_HOSTED_CMD_CONNECTED_STA__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_connected_sta__get_packed_size
@@ -993,13 +1037,15 @@ void   esp_hosted_cmd_connected_sta__free_unpacked
                      (EspHostedCmdConnectedSTA *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_connected_sta__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_connected_sta__init
                      (EspHostedRespConnectedSTA         *message)
 {
-  static EspHostedRespConnectedSTA init_value = ESP_HOSTED_RESP_CONNECTED_STA__INIT;
+  static const EspHostedRespConnectedSTA init_value = ESP_HOSTED_RESP_CONNECTED_STA__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_connected_sta__get_packed_size
@@ -1036,13 +1082,15 @@ void   esp_hosted_resp_connected_sta__free_unpacked
                      (EspHostedRespConnectedSTA *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_connected_sta__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_otabegin__init
                      (EspHostedCmdOTABegin         *message)
 {
-  static EspHostedCmdOTABegin init_value = ESP_HOSTED_CMD_OTABEGIN__INIT;
+  static const EspHostedCmdOTABegin init_value = ESP_HOSTED_CMD_OTABEGIN__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_otabegin__get_packed_size
@@ -1079,13 +1127,15 @@ void   esp_hosted_cmd_otabegin__free_unpacked
                      (EspHostedCmdOTABegin *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_otabegin__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_otabegin__init
                      (EspHostedRespOTABegin         *message)
 {
-  static EspHostedRespOTABegin init_value = ESP_HOSTED_RESP_OTABEGIN__INIT;
+  static const EspHostedRespOTABegin init_value = ESP_HOSTED_RESP_OTABEGIN__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_otabegin__get_packed_size
@@ -1122,13 +1172,15 @@ void   esp_hosted_resp_otabegin__free_unpacked
                      (EspHostedRespOTABegin *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_otabegin__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_otawrite__init
                      (EspHostedCmdOTAWrite         *message)
 {
-  static EspHostedCmdOTAWrite init_value = ESP_HOSTED_CMD_OTAWRITE__INIT;
+  static const EspHostedCmdOTAWrite init_value = ESP_HOSTED_CMD_OTAWRITE__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_otawrite__get_packed_size
@@ -1165,13 +1217,15 @@ void   esp_hosted_cmd_otawrite__free_unpacked
                      (EspHostedCmdOTAWrite *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_otawrite__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_otawrite__init
                      (EspHostedRespOTAWrite         *message)
 {
-  static EspHostedRespOTAWrite init_value = ESP_HOSTED_RESP_OTAWRITE__INIT;
+  static const EspHostedRespOTAWrite init_value = ESP_HOSTED_RESP_OTAWRITE__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_otawrite__get_packed_size
@@ -1208,13 +1262,15 @@ void   esp_hosted_resp_otawrite__free_unpacked
                      (EspHostedRespOTAWrite *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_otawrite__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_otaend__init
                      (EspHostedCmdOTAEnd         *message)
 {
-  static EspHostedCmdOTAEnd init_value = ESP_HOSTED_CMD_OTAEND__INIT;
+  static const EspHostedCmdOTAEnd init_value = ESP_HOSTED_CMD_OTAEND__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_otaend__get_packed_size
@@ -1251,13 +1307,15 @@ void   esp_hosted_cmd_otaend__free_unpacked
                      (EspHostedCmdOTAEnd *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_otaend__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_otaend__init
                      (EspHostedRespOTAEnd         *message)
 {
-  static EspHostedRespOTAEnd init_value = ESP_HOSTED_RESP_OTAEND__INIT;
+  static const EspHostedRespOTAEnd init_value = ESP_HOSTED_RESP_OTAEND__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_otaend__get_packed_size
@@ -1294,13 +1352,15 @@ void   esp_hosted_resp_otaend__free_unpacked
                      (EspHostedRespOTAEnd *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_otaend__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_set_vendor_specific_ie__init
                      (EspHostedCmdSetVendorSpecificIE         *message)
 {
-  static EspHostedCmdSetVendorSpecificIE init_value = ESP_HOSTED_CMD_SET_VENDOR_SPECIFIC_IE__INIT;
+  static const EspHostedCmdSetVendorSpecificIE init_value = ESP_HOSTED_CMD_SET_VENDOR_SPECIFIC_IE__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_set_vendor_specific_ie__get_packed_size
@@ -1337,13 +1397,15 @@ void   esp_hosted_cmd_set_vendor_specific_ie__free_unpacked
                      (EspHostedCmdSetVendorSpecificIE *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_set_vendor_specific_ie__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_set_vendor_specific_ie__init
                      (EspHostedRespSetVendorSpecificIE         *message)
 {
-  static EspHostedRespSetVendorSpecificIE init_value = ESP_HOSTED_RESP_SET_VENDOR_SPECIFIC_IE__INIT;
+  static const EspHostedRespSetVendorSpecificIE init_value = ESP_HOSTED_RESP_SET_VENDOR_SPECIFIC_IE__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_set_vendor_specific_ie__get_packed_size
@@ -1380,13 +1442,15 @@ void   esp_hosted_resp_set_vendor_specific_ie__free_unpacked
                      (EspHostedRespSetVendorSpecificIE *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_set_vendor_specific_ie__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_set_wi_fi_maxtxpower__init
                      (EspHostedCmdSetWiFiMAXTXPower         *message)
 {
-  static EspHostedCmdSetWiFiMAXTXPower init_value = ESP_HOSTED_CMD_SET_WI_FI_MAXTXPOWER__INIT;
+  static const EspHostedCmdSetWiFiMAXTXPower init_value = ESP_HOSTED_CMD_SET_WI_FI_MAXTXPOWER__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_set_wi_fi_maxtxpower__get_packed_size
@@ -1423,13 +1487,15 @@ void   esp_hosted_cmd_set_wi_fi_maxtxpower__free_unpacked
                      (EspHostedCmdSetWiFiMAXTXPower *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_set_wi_fi_maxtxpower__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_set_wi_fi_maxtxpower__init
                      (EspHostedRespSetWiFiMAXTXPower         *message)
 {
-  static EspHostedRespSetWiFiMAXTXPower init_value = ESP_HOSTED_RESP_SET_WI_FI_MAXTXPOWER__INIT;
+  static const EspHostedRespSetWiFiMAXTXPower init_value = ESP_HOSTED_RESP_SET_WI_FI_MAXTXPOWER__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_set_wi_fi_maxtxpower__get_packed_size
@@ -1466,13 +1532,15 @@ void   esp_hosted_resp_set_wi_fi_maxtxpower__free_unpacked
                      (EspHostedRespSetWiFiMAXTXPower *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_set_wi_fi_maxtxpower__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_cmd_get_wi_fi_curr_txpower__init
                      (EspHostedCmdGetWiFiCurrTXPower         *message)
 {
-  static EspHostedCmdGetWiFiCurrTXPower init_value = ESP_HOSTED_CMD_GET_WI_FI_CURR_TXPOWER__INIT;
+  static const EspHostedCmdGetWiFiCurrTXPower init_value = ESP_HOSTED_CMD_GET_WI_FI_CURR_TXPOWER__INIT;
   *message = init_value;
 }
 size_t esp_hosted_cmd_get_wi_fi_curr_txpower__get_packed_size
@@ -1509,13 +1577,15 @@ void   esp_hosted_cmd_get_wi_fi_curr_txpower__free_unpacked
                      (EspHostedCmdGetWiFiCurrTXPower *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_cmd_get_wi_fi_curr_txpower__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_resp_get_wi_fi_curr_txpower__init
                      (EspHostedRespGetWiFiCurrTXPower         *message)
 {
-  static EspHostedRespGetWiFiCurrTXPower init_value = ESP_HOSTED_RESP_GET_WI_FI_CURR_TXPOWER__INIT;
+  static const EspHostedRespGetWiFiCurrTXPower init_value = ESP_HOSTED_RESP_GET_WI_FI_CURR_TXPOWER__INIT;
   *message = init_value;
 }
 size_t esp_hosted_resp_get_wi_fi_curr_txpower__get_packed_size
@@ -1552,13 +1622,105 @@ void   esp_hosted_resp_get_wi_fi_curr_txpower__free_unpacked
                      (EspHostedRespGetWiFiCurrTXPower *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_resp_get_wi_fi_curr_txpower__descriptor);
+  protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
+}
+void   esp_hosted_cmd_set_mad_swift_priv__init
+                     (EspHostedCmdSetMadSwiftPriv         *message)
+{
+  static const EspHostedCmdSetMadSwiftPriv init_value = ESP_HOSTED_CMD_SET_MAD_SWIFT_PRIV__INIT;
+  *message = init_value;
+}
+size_t esp_hosted_cmd_set_mad_swift_priv__get_packed_size
+                     (const EspHostedCmdSetMadSwiftPriv *message)
+{
+  assert(message->base.descriptor == &esp_hosted_cmd_set_mad_swift_priv__descriptor);
+  return protobuf_c_message_get_packed_size ((const ProtobufCMessage*)(message));
+}
+size_t esp_hosted_cmd_set_mad_swift_priv__pack
+                     (const EspHostedCmdSetMadSwiftPriv *message,
+                      uint8_t       *out)
+{
+  assert(message->base.descriptor == &esp_hosted_cmd_set_mad_swift_priv__descriptor);
+  return protobuf_c_message_pack ((const ProtobufCMessage*)message, out);
+}
+size_t esp_hosted_cmd_set_mad_swift_priv__pack_to_buffer
+                     (const EspHostedCmdSetMadSwiftPriv *message,
+                      ProtobufCBuffer *buffer)
+{
+  assert(message->base.descriptor == &esp_hosted_cmd_set_mad_swift_priv__descriptor);
+  return protobuf_c_message_pack_to_buffer ((const ProtobufCMessage*)message, buffer);
+}
+EspHostedCmdSetMadSwiftPriv *
+       esp_hosted_cmd_set_mad_swift_priv__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data)
+{
+  return (EspHostedCmdSetMadSwiftPriv *)
+     protobuf_c_message_unpack (&esp_hosted_cmd_set_mad_swift_priv__descriptor,
+                                allocator, len, data);
+}
+void   esp_hosted_cmd_set_mad_swift_priv__free_unpacked
+                     (EspHostedCmdSetMadSwiftPriv *message,
+                      ProtobufCAllocator *allocator)
+{
+  if(!message)
+    return;
+  assert(message->base.descriptor == &esp_hosted_cmd_set_mad_swift_priv__descriptor);
+  protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
+}
+void   esp_hosted_resp_set_mad_swift_priv__init
+                     (EspHostedRespSetMadSwiftPriv         *message)
+{
+  static const EspHostedRespSetMadSwiftPriv init_value = ESP_HOSTED_RESP_SET_MAD_SWIFT_PRIV__INIT;
+  *message = init_value;
+}
+size_t esp_hosted_resp_set_mad_swift_priv__get_packed_size
+                     (const EspHostedRespSetMadSwiftPriv *message)
+{
+  assert(message->base.descriptor == &esp_hosted_resp_set_mad_swift_priv__descriptor);
+  return protobuf_c_message_get_packed_size ((const ProtobufCMessage*)(message));
+}
+size_t esp_hosted_resp_set_mad_swift_priv__pack
+                     (const EspHostedRespSetMadSwiftPriv *message,
+                      uint8_t       *out)
+{
+  assert(message->base.descriptor == &esp_hosted_resp_set_mad_swift_priv__descriptor);
+  return protobuf_c_message_pack ((const ProtobufCMessage*)message, out);
+}
+size_t esp_hosted_resp_set_mad_swift_priv__pack_to_buffer
+                     (const EspHostedRespSetMadSwiftPriv *message,
+                      ProtobufCBuffer *buffer)
+{
+  assert(message->base.descriptor == &esp_hosted_resp_set_mad_swift_priv__descriptor);
+  return protobuf_c_message_pack_to_buffer ((const ProtobufCMessage*)message, buffer);
+}
+EspHostedRespSetMadSwiftPriv *
+       esp_hosted_resp_set_mad_swift_priv__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data)
+{
+  return (EspHostedRespSetMadSwiftPriv *)
+     protobuf_c_message_unpack (&esp_hosted_resp_set_mad_swift_priv__descriptor,
+                                allocator, len, data);
+}
+void   esp_hosted_resp_set_mad_swift_priv__free_unpacked
+                     (EspHostedRespSetMadSwiftPriv *message,
+                      ProtobufCAllocator *allocator)
+{
+  if(!message)
+    return;
+  assert(message->base.descriptor == &esp_hosted_resp_set_mad_swift_priv__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
 void   esp_hosted_config_payload__init
                      (EspHostedConfigPayload         *message)
 {
-  static EspHostedConfigPayload init_value = ESP_HOSTED_CONFIG_PAYLOAD__INIT;
+  static const EspHostedConfigPayload init_value = ESP_HOSTED_CONFIG_PAYLOAD__INIT;
   *message = init_value;
 }
 size_t esp_hosted_config_payload__get_packed_size
@@ -1595,6 +1757,8 @@ void   esp_hosted_config_payload__free_unpacked
                      (EspHostedConfigPayload *message,
                       ProtobufCAllocator *allocator)
 {
+  if(!message)
+    return;
   assert(message->base.descriptor == &esp_hosted_config_payload__descriptor);
   protobuf_c_message_free_unpacked ((ProtobufCMessage*)message, allocator);
 }
@@ -1603,9 +1767,9 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_get_mac_address__field_desc
   {
     "mode",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedCmdGetMacAddress, has_mode),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdGetMacAddress, mode),
     NULL,
     NULL,
@@ -1641,9 +1805,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_mac_address__field_des
   {
     "mac",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_BYTES,
-    offsetof(EspHostedRespGetMacAddress, has_mac),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetMacAddress, mac),
     NULL,
     NULL,
@@ -1653,9 +1817,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_mac_address__field_des
   {
     "resp",
     2,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespGetMacAddress, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetMacAddress, resp),
     NULL,
     NULL,
@@ -1710,9 +1874,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_mode__field_descriptor
   {
     "mode",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespGetMode, has_mode),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetMode, mode),
     NULL,
     NULL,
@@ -1722,9 +1886,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_mode__field_descriptor
   {
     "resp",
     2,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespGetMode, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetMode, resp),
     NULL,
     NULL,
@@ -1761,9 +1925,9 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_set_mode__field_descriptors
   {
     "mode",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedCmdSetMode, has_mode),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetMode, mode),
     NULL,
     NULL,
@@ -1799,9 +1963,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_set_mode__field_descriptor
   {
     "resp",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespSetMode, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespSetMode, resp),
     NULL,
     NULL,
@@ -1855,9 +2019,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_status__field_descript
   {
     "resp",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespGetStatus, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetStatus, resp),
     NULL,
     NULL,
@@ -1893,9 +2057,9 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_set_mac_address__field_desc
   {
     "mac",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_BYTES,
-    offsetof(EspHostedCmdSetMacAddress, has_mac),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetMacAddress, mac),
     NULL,
     NULL,
@@ -1905,9 +2069,9 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_set_mac_address__field_desc
   {
     "mode",
     2,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedCmdSetMacAddress, has_mode),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetMacAddress, mode),
     NULL,
     NULL,
@@ -1944,9 +2108,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_set_mac_address__field_des
   {
     "resp",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespSetMacAddress, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespSetMacAddress, resp),
     NULL,
     NULL,
@@ -2000,9 +2164,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_apconfig__field_descri
   {
     "ssid",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_BYTES,
-    offsetof(EspHostedRespGetAPConfig, has_ssid),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetAPConfig, ssid),
     NULL,
     NULL,
@@ -2012,9 +2176,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_apconfig__field_descri
   {
     "bssid",
     2,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_BYTES,
-    offsetof(EspHostedRespGetAPConfig, has_bssid),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetAPConfig, bssid),
     NULL,
     NULL,
@@ -2024,9 +2188,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_apconfig__field_descri
   {
     "rssi",
     3,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespGetAPConfig, has_rssi),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetAPConfig, rssi),
     NULL,
     NULL,
@@ -2036,9 +2200,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_apconfig__field_descri
   {
     "chnl",
     4,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespGetAPConfig, has_chnl),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetAPConfig, chnl),
     NULL,
     NULL,
@@ -2048,9 +2212,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_apconfig__field_descri
   {
     "ecn",
     5,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_ENUM,
-    offsetof(EspHostedRespGetAPConfig, has_ecn),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetAPConfig, ecn),
     &esp_hosted_encryption_mode__descriptor,
     NULL,
@@ -2060,9 +2224,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_apconfig__field_descri
   {
     "resp",
     6,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespGetAPConfig, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetAPConfig, resp),
     NULL,
     NULL,
@@ -2103,45 +2267,45 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_set_apconfig__field_descrip
   {
     "ssid",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_STRING,
     0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetAPConfig, ssid),
     NULL,
-    NULL,
+    &protobuf_c_empty_string,
     0,             /* flags */
     0,NULL,NULL    /* reserved1,reserved2, etc */
   },
   {
     "pwd",
     2,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_STRING,
     0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetAPConfig, pwd),
     NULL,
-    NULL,
+    &protobuf_c_empty_string,
     0,             /* flags */
     0,NULL,NULL    /* reserved1,reserved2, etc */
   },
   {
     "bssid",
     3,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_STRING,
     0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetAPConfig, bssid),
     NULL,
-    NULL,
+    &protobuf_c_empty_string,
     0,             /* flags */
     0,NULL,NULL    /* reserved1,reserved2, etc */
   },
   {
     "is_wpa3_supported",
     4,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_BOOL,
-    offsetof(EspHostedCmdSetAPConfig, has_is_wpa3_supported),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetAPConfig, is_wpa3_supported),
     NULL,
     NULL,
@@ -2151,9 +2315,9 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_set_apconfig__field_descrip
   {
     "listen_interval",
     5,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedCmdSetAPConfig, has_listen_interval),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetAPConfig, listen_interval),
     NULL,
     NULL,
@@ -2193,9 +2357,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_set_apconfig__field_descri
   {
     "resp",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespSetAPConfig, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespSetAPConfig, resp),
     NULL,
     NULL,
@@ -2249,9 +2413,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_soft_apconfig__field_d
   {
     "ssid",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_BYTES,
-    offsetof(EspHostedRespGetSoftAPConfig, has_ssid),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetSoftAPConfig, ssid),
     NULL,
     NULL,
@@ -2261,9 +2425,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_soft_apconfig__field_d
   {
     "pwd",
     2,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_BYTES,
-    offsetof(EspHostedRespGetSoftAPConfig, has_pwd),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetSoftAPConfig, pwd),
     NULL,
     NULL,
@@ -2273,9 +2437,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_soft_apconfig__field_d
   {
     "chnl",
     3,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespGetSoftAPConfig, has_chnl),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetSoftAPConfig, chnl),
     NULL,
     NULL,
@@ -2285,9 +2449,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_soft_apconfig__field_d
   {
     "ecn",
     4,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_ENUM,
-    offsetof(EspHostedRespGetSoftAPConfig, has_ecn),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetSoftAPConfig, ecn),
     &esp_hosted_encryption_mode__descriptor,
     NULL,
@@ -2297,9 +2461,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_soft_apconfig__field_d
   {
     "max_conn",
     5,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespGetSoftAPConfig, has_max_conn),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetSoftAPConfig, max_conn),
     NULL,
     NULL,
@@ -2309,9 +2473,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_soft_apconfig__field_d
   {
     "ssid_hidden",
     6,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_BOOL,
-    offsetof(EspHostedRespGetSoftAPConfig, has_ssid_hidden),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetSoftAPConfig, ssid_hidden),
     NULL,
     NULL,
@@ -2321,9 +2485,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_soft_apconfig__field_d
   {
     "bw",
     7,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespGetSoftAPConfig, has_bw),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetSoftAPConfig, bw),
     NULL,
     NULL,
@@ -2333,9 +2497,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_soft_apconfig__field_d
   {
     "resp",
     8,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespGetSoftAPConfig, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetSoftAPConfig, resp),
     NULL,
     NULL,
@@ -2378,33 +2542,33 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_set_soft_apconfig__field_de
   {
     "ssid",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_STRING,
     0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetSoftAPConfig, ssid),
     NULL,
-    NULL,
+    &protobuf_c_empty_string,
     0,             /* flags */
     0,NULL,NULL    /* reserved1,reserved2, etc */
   },
   {
     "pwd",
     2,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_STRING,
     0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetSoftAPConfig, pwd),
     NULL,
-    NULL,
+    &protobuf_c_empty_string,
     0,             /* flags */
     0,NULL,NULL    /* reserved1,reserved2, etc */
   },
   {
     "chnl",
     3,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedCmdSetSoftAPConfig, has_chnl),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetSoftAPConfig, chnl),
     NULL,
     NULL,
@@ -2414,9 +2578,9 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_set_soft_apconfig__field_de
   {
     "ecn",
     4,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_ENUM,
-    offsetof(EspHostedCmdSetSoftAPConfig, has_ecn),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetSoftAPConfig, ecn),
     &esp_hosted_encryption_mode__descriptor,
     NULL,
@@ -2426,9 +2590,9 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_set_soft_apconfig__field_de
   {
     "max_conn",
     5,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedCmdSetSoftAPConfig, has_max_conn),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetSoftAPConfig, max_conn),
     NULL,
     NULL,
@@ -2438,9 +2602,9 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_set_soft_apconfig__field_de
   {
     "ssid_hidden",
     6,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_BOOL,
-    offsetof(EspHostedCmdSetSoftAPConfig, has_ssid_hidden),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetSoftAPConfig, ssid_hidden),
     NULL,
     NULL,
@@ -2450,9 +2614,9 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_set_soft_apconfig__field_de
   {
     "bw",
     7,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedCmdSetSoftAPConfig, has_bw),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetSoftAPConfig, bw),
     NULL,
     NULL,
@@ -2494,9 +2658,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_set_soft_apconfig__field_d
   {
     "resp",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespSetSoftAPConfig, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespSetSoftAPConfig, resp),
     NULL,
     NULL,
@@ -2532,9 +2696,9 @@ static const ProtobufCFieldDescriptor esp_hosted_scan_result__field_descriptors[
   {
     "ssid",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_BYTES,
-    offsetof(EspHostedScanResult, has_ssid),
+    0,   /* quantifier_offset */
     offsetof(EspHostedScanResult, ssid),
     NULL,
     NULL,
@@ -2544,9 +2708,9 @@ static const ProtobufCFieldDescriptor esp_hosted_scan_result__field_descriptors[
   {
     "chnl",
     2,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
-    offsetof(EspHostedScanResult, has_chnl),
+    0,   /* quantifier_offset */
     offsetof(EspHostedScanResult, chnl),
     NULL,
     NULL,
@@ -2556,9 +2720,9 @@ static const ProtobufCFieldDescriptor esp_hosted_scan_result__field_descriptors[
   {
     "rssi",
     3,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedScanResult, has_rssi),
+    0,   /* quantifier_offset */
     offsetof(EspHostedScanResult, rssi),
     NULL,
     NULL,
@@ -2568,9 +2732,9 @@ static const ProtobufCFieldDescriptor esp_hosted_scan_result__field_descriptors[
   {
     "bssid",
     4,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_BYTES,
-    offsetof(EspHostedScanResult, has_bssid),
+    0,   /* quantifier_offset */
     offsetof(EspHostedScanResult, bssid),
     NULL,
     NULL,
@@ -2580,9 +2744,9 @@ static const ProtobufCFieldDescriptor esp_hosted_scan_result__field_descriptors[
   {
     "ecn",
     5,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_ENUM,
-    offsetof(EspHostedScanResult, has_ecn),
+    0,   /* quantifier_offset */
     offsetof(EspHostedScanResult, ecn),
     &esp_hosted_encryption_mode__descriptor,
     NULL,
@@ -2640,9 +2804,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_scan_result__field_descrip
   {
     "count",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
-    offsetof(EspHostedRespScanResult, has_count),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespScanResult, count),
     NULL,
     NULL,
@@ -2664,9 +2828,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_scan_result__field_descrip
   {
     "resp",
     3,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespScanResult, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespScanResult, resp),
     NULL,
     NULL,
@@ -2704,9 +2868,9 @@ static const ProtobufCFieldDescriptor esp_hosted_connected_stalist__field_descri
   {
     "mac",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_BYTES,
-    offsetof(EspHostedConnectedSTAList, has_mac),
+    0,   /* quantifier_offset */
     offsetof(EspHostedConnectedSTAList, mac),
     NULL,
     NULL,
@@ -2716,9 +2880,9 @@ static const ProtobufCFieldDescriptor esp_hosted_connected_stalist__field_descri
   {
     "rssi",
     2,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedConnectedSTAList, has_rssi),
+    0,   /* quantifier_offset */
     offsetof(EspHostedConnectedSTAList, rssi),
     NULL,
     NULL,
@@ -2773,9 +2937,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_connected_sta__field_descr
   {
     "num",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_UINT32,
-    offsetof(EspHostedRespConnectedSTA, has_num),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespConnectedSTA, num),
     NULL,
     NULL,
@@ -2797,9 +2961,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_connected_sta__field_descr
   {
     "resp",
     3,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespConnectedSTA, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespConnectedSTA, resp),
     NULL,
     NULL,
@@ -2855,9 +3019,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_otabegin__field_descriptor
   {
     "resp",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespOTABegin, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespOTABegin, resp),
     NULL,
     NULL,
@@ -2893,9 +3057,9 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_otawrite__field_descriptors
   {
     "ota_data",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_BYTES,
-    offsetof(EspHostedCmdOTAWrite, has_ota_data),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdOTAWrite, ota_data),
     NULL,
     NULL,
@@ -2931,9 +3095,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_otawrite__field_descriptor
   {
     "resp",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespOTAWrite, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespOTAWrite, resp),
     NULL,
     NULL,
@@ -2987,9 +3151,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_otaend__field_descriptors[
   {
     "resp",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespOTAEnd, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespOTAEnd, resp),
     NULL,
     NULL,
@@ -3025,9 +3189,9 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_set_vendor_specific_ie__fie
   {
     "enable",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_BOOL,
-    offsetof(EspHostedCmdSetVendorSpecificIE, has_enable),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetVendorSpecificIE, enable),
     NULL,
     NULL,
@@ -3037,9 +3201,9 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_set_vendor_specific_ie__fie
   {
     "type",
     2,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_ENUM,
-    offsetof(EspHostedCmdSetVendorSpecificIE, has_type),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetVendorSpecificIE, type),
     &esp_hosted_vendor_ietype__descriptor,
     NULL,
@@ -3049,9 +3213,9 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_set_vendor_specific_ie__fie
   {
     "idx",
     3,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_ENUM,
-    offsetof(EspHostedCmdSetVendorSpecificIE, has_idx),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetVendorSpecificIE, idx),
     &esp_hosted_ieid__descriptor,
     NULL,
@@ -3061,9 +3225,9 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_set_vendor_specific_ie__fie
   {
     "vendor_ie_data",
     4,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_BYTES,
-    offsetof(EspHostedCmdSetVendorSpecificIE, has_vendor_ie_data),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetVendorSpecificIE, vendor_ie_data),
     NULL,
     NULL,
@@ -3102,9 +3266,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_set_vendor_specific_ie__fi
   {
     "resp",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespSetVendorSpecificIE, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespSetVendorSpecificIE, resp),
     NULL,
     NULL,
@@ -3140,9 +3304,9 @@ static const ProtobufCFieldDescriptor esp_hosted_cmd_set_wi_fi_maxtxpower__field
   {
     "wifi_max_tx_power",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedCmdSetWiFiMAXTXPower, has_wifi_max_tx_power),
+    0,   /* quantifier_offset */
     offsetof(EspHostedCmdSetWiFiMAXTXPower, wifi_max_tx_power),
     NULL,
     NULL,
@@ -3178,9 +3342,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_set_wi_fi_maxtxpower__fiel
   {
     "resp",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespSetWiFiMAXTXPower, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespSetWiFiMAXTXPower, resp),
     NULL,
     NULL,
@@ -3234,9 +3398,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_wi_fi_curr_txpower__fi
   {
     "wifi_curr_tx_power",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespGetWiFiCurrTXPower, has_wifi_curr_tx_power),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetWiFiCurrTXPower, wifi_curr_tx_power),
     NULL,
     NULL,
@@ -3246,9 +3410,9 @@ static const ProtobufCFieldDescriptor esp_hosted_resp_get_wi_fi_curr_txpower__fi
   {
     "resp",
     2,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_INT32,
-    offsetof(EspHostedRespGetWiFiCurrTXPower, has_resp),
+    0,   /* quantifier_offset */
     offsetof(EspHostedRespGetWiFiCurrTXPower, resp),
     NULL,
     NULL,
@@ -3280,14 +3444,116 @@ const ProtobufCMessageDescriptor esp_hosted_resp_get_wi_fi_curr_txpower__descrip
   (ProtobufCMessageInit) esp_hosted_resp_get_wi_fi_curr_txpower__init,
   NULL,NULL,NULL    /* reserved[123] */
 };
-static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descriptors[41] =
+static const ProtobufCFieldDescriptor esp_hosted_cmd_set_mad_swift_priv__field_descriptors[3] =
+{
+  {
+    "type",
+    1,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_ENUM,
+    0,   /* quantifier_offset */
+    offsetof(EspHostedCmdSetMadSwiftPriv, type),
+    &esp_hosted_mad_swift_priv_type__descriptor,
+    NULL,
+    0,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+  {
+    "payload",
+    2,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_BYTES,
+    0,   /* quantifier_offset */
+    offsetof(EspHostedCmdSetMadSwiftPriv, payload),
+    NULL,
+    NULL,
+    0,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+  {
+    "len",
+    3,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_INT32,
+    0,   /* quantifier_offset */
+    offsetof(EspHostedCmdSetMadSwiftPriv, len),
+    NULL,
+    NULL,
+    0,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+};
+static const unsigned esp_hosted_cmd_set_mad_swift_priv__field_indices_by_name[] = {
+  2,   /* field[2] = len */
+  1,   /* field[1] = payload */
+  0,   /* field[0] = type */
+};
+static const ProtobufCIntRange esp_hosted_cmd_set_mad_swift_priv__number_ranges[1 + 1] =
+{
+  { 1, 0 },
+  { 0, 3 }
+};
+const ProtobufCMessageDescriptor esp_hosted_cmd_set_mad_swift_priv__descriptor =
+{
+  PROTOBUF_C__MESSAGE_DESCRIPTOR_MAGIC,
+  "EspHostedCmdSetMadSwiftPriv",
+  "EspHostedCmdSetMadSwiftPriv",
+  "EspHostedCmdSetMadSwiftPriv",
+  "",
+  sizeof(EspHostedCmdSetMadSwiftPriv),
+  3,
+  esp_hosted_cmd_set_mad_swift_priv__field_descriptors,
+  esp_hosted_cmd_set_mad_swift_priv__field_indices_by_name,
+  1,  esp_hosted_cmd_set_mad_swift_priv__number_ranges,
+  (ProtobufCMessageInit) esp_hosted_cmd_set_mad_swift_priv__init,
+  NULL,NULL,NULL    /* reserved[123] */
+};
+static const ProtobufCFieldDescriptor esp_hosted_resp_set_mad_swift_priv__field_descriptors[1] =
+{
+  {
+    "resp",
+    1,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_INT32,
+    0,   /* quantifier_offset */
+    offsetof(EspHostedRespSetMadSwiftPriv, resp),
+    NULL,
+    NULL,
+    0,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+};
+static const unsigned esp_hosted_resp_set_mad_swift_priv__field_indices_by_name[] = {
+  0,   /* field[0] = resp */
+};
+static const ProtobufCIntRange esp_hosted_resp_set_mad_swift_priv__number_ranges[1 + 1] =
+{
+  { 1, 0 },
+  { 0, 1 }
+};
+const ProtobufCMessageDescriptor esp_hosted_resp_set_mad_swift_priv__descriptor =
+{
+  PROTOBUF_C__MESSAGE_DESCRIPTOR_MAGIC,
+  "EspHostedRespSetMadSwiftPriv",
+  "EspHostedRespSetMadSwiftPriv",
+  "EspHostedRespSetMadSwiftPriv",
+  "",
+  sizeof(EspHostedRespSetMadSwiftPriv),
+  1,
+  esp_hosted_resp_set_mad_swift_priv__field_descriptors,
+  esp_hosted_resp_set_mad_swift_priv__field_indices_by_name,
+  1,  esp_hosted_resp_set_mad_swift_priv__number_ranges,
+  (ProtobufCMessageInit) esp_hosted_resp_set_mad_swift_priv__init,
+  NULL,NULL,NULL    /* reserved[123] */
+};
+static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descriptors[43] =
 {
   {
     "msg",
     1,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_ENUM,
-    offsetof(EspHostedConfigPayload, has_msg),
+    0,   /* quantifier_offset */
     offsetof(EspHostedConfigPayload, msg),
     &esp_hosted_config_msg_type__descriptor,
     NULL,
@@ -3297,7 +3563,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_get_mac_address",
     10,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_get_mac_address),
@@ -3309,7 +3575,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_get_mac_address",
     11,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_get_mac_address),
@@ -3321,7 +3587,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_get_wifi_mode",
     12,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_get_wifi_mode),
@@ -3333,7 +3599,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_get_wifi_mode",
     13,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_get_wifi_mode),
@@ -3345,7 +3611,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_set_wifi_mode",
     14,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_set_wifi_mode),
@@ -3357,7 +3623,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_set_wifi_mode",
     15,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_set_wifi_mode),
@@ -3369,7 +3635,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_get_ap_config",
     16,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_get_ap_config),
@@ -3381,7 +3647,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_get_ap_config",
     17,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_get_ap_config),
@@ -3393,7 +3659,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_set_ap_config",
     18,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_set_ap_config),
@@ -3405,7 +3671,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_set_ap_config",
     19,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_set_ap_config),
@@ -3417,7 +3683,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_get_softap_config",
     20,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_get_softap_config),
@@ -3429,7 +3695,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_get_softap_config",
     21,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_get_softap_config),
@@ -3441,7 +3707,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_set_softap_config",
     22,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_set_softap_config),
@@ -3453,7 +3719,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_set_softap_config",
     23,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_set_softap_config),
@@ -3465,7 +3731,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_disconnect_ap",
     24,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_disconnect_ap),
@@ -3477,7 +3743,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_disconnect_ap",
     25,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_disconnect_ap),
@@ -3489,7 +3755,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_stop_softap",
     26,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_stop_softap),
@@ -3501,7 +3767,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_stop_softap",
     27,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_stop_softap),
@@ -3513,7 +3779,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_scan_ap_list",
     28,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_scan_ap_list),
@@ -3525,7 +3791,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_scan_ap_list",
     29,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_scan_ap_list),
@@ -3537,7 +3803,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_connected_stas_list",
     30,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_connected_stas_list),
@@ -3549,7 +3815,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_connected_stas_list",
     31,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_connected_stas_list),
@@ -3561,7 +3827,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_set_mac_address",
     32,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_set_mac_address),
@@ -3573,7 +3839,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_set_mac_address",
     33,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_set_mac_address),
@@ -3585,7 +3851,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_set_power_save_mode",
     34,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_set_power_save_mode),
@@ -3597,7 +3863,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_set_power_save_mode",
     35,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_set_power_save_mode),
@@ -3609,7 +3875,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_get_power_save_mode",
     36,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_get_power_save_mode),
@@ -3621,7 +3887,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_get_power_save_mode",
     37,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_get_power_save_mode),
@@ -3633,7 +3899,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_ota_begin",
     38,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_ota_begin),
@@ -3645,7 +3911,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_ota_begin",
     39,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_ota_begin),
@@ -3657,7 +3923,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_ota_write",
     40,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_ota_write),
@@ -3669,7 +3935,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_ota_write",
     41,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_ota_write),
@@ -3681,7 +3947,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_ota_end",
     42,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_ota_end),
@@ -3693,7 +3959,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_ota_end",
     43,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_ota_end),
@@ -3705,7 +3971,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_set_vendor_specific_ie",
     44,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_set_vendor_specific_ie),
@@ -3717,7 +3983,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_set_vendor_specific_ie",
     45,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_set_vendor_specific_ie),
@@ -3729,7 +3995,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_set_wifi_max_tx_power",
     46,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_set_wifi_max_tx_power),
@@ -3741,7 +4007,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_set_wifi_max_tx_power",
     47,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_set_wifi_max_tx_power),
@@ -3753,7 +4019,7 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "cmd_get_wifi_curr_tx_power",
     48,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, cmd_get_wifi_curr_tx_power),
@@ -3765,11 +4031,35 @@ static const ProtobufCFieldDescriptor esp_hosted_config_payload__field_descripto
   {
     "resp_get_wifi_curr_tx_power",
     49,
-    PROTOBUF_C_LABEL_OPTIONAL,
+    PROTOBUF_C_LABEL_NONE,
     PROTOBUF_C_TYPE_MESSAGE,
     offsetof(EspHostedConfigPayload, payload_case),
     offsetof(EspHostedConfigPayload, resp_get_wifi_curr_tx_power),
     &esp_hosted_resp_get_wi_fi_curr_txpower__descriptor,
+    NULL,
+    0 | PROTOBUF_C_FIELD_FLAG_ONEOF,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+  {
+    "cmd_set_mad_swift_priv",
+    50,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_MESSAGE,
+    offsetof(EspHostedConfigPayload, payload_case),
+    offsetof(EspHostedConfigPayload, cmd_set_mad_swift_priv),
+    &esp_hosted_cmd_set_mad_swift_priv__descriptor,
+    NULL,
+    0 | PROTOBUF_C_FIELD_FLAG_ONEOF,             /* flags */
+    0,NULL,NULL    /* reserved1,reserved2, etc */
+  },
+  {
+    "resp_set_mad_swift_priv",
+    51,
+    PROTOBUF_C_LABEL_NONE,
+    PROTOBUF_C_TYPE_MESSAGE,
+    offsetof(EspHostedConfigPayload, payload_case),
+    offsetof(EspHostedConfigPayload, resp_set_mad_swift_priv),
+    &esp_hosted_resp_set_mad_swift_priv__descriptor,
     NULL,
     0 | PROTOBUF_C_FIELD_FLAG_ONEOF,             /* flags */
     0,NULL,NULL    /* reserved1,reserved2, etc */
@@ -3790,6 +4080,7 @@ static const unsigned esp_hosted_config_payload__field_indices_by_name[] = {
   19,   /* field[19] = cmd_scan_ap_list */
   9,   /* field[9] = cmd_set_ap_config */
   23,   /* field[23] = cmd_set_mac_address */
+  41,   /* field[41] = cmd_set_mad_swift_priv */
   25,   /* field[25] = cmd_set_power_save_mode */
   13,   /* field[13] = cmd_set_softap_config */
   35,   /* field[35] = cmd_set_vendor_specific_ie */
@@ -3811,6 +4102,7 @@ static const unsigned esp_hosted_config_payload__field_indices_by_name[] = {
   20,   /* field[20] = resp_scan_ap_list */
   10,   /* field[10] = resp_set_ap_config */
   24,   /* field[24] = resp_set_mac_address */
+  42,   /* field[42] = resp_set_mad_swift_priv */
   26,   /* field[26] = resp_set_power_save_mode */
   14,   /* field[14] = resp_set_softap_config */
   36,   /* field[36] = resp_set_vendor_specific_ie */
@@ -3822,7 +4114,7 @@ static const ProtobufCIntRange esp_hosted_config_payload__number_ranges[2 + 1] =
 {
   { 1, 0 },
   { 10, 1 },
-  { 0, 41 }
+  { 0, 43 }
 };
 const ProtobufCMessageDescriptor esp_hosted_config_payload__descriptor =
 {
@@ -3832,7 +4124,7 @@ const ProtobufCMessageDescriptor esp_hosted_config_payload__descriptor =
   "EspHostedConfigPayload",
   "",
   sizeof(EspHostedConfigPayload),
-  41,
+  43,
   esp_hosted_config_payload__field_descriptors,
   esp_hosted_config_payload__field_indices_by_name,
   2,  esp_hosted_config_payload__number_ranges,
@@ -3977,7 +4269,35 @@ const ProtobufCEnumDescriptor esp_hosted_ieid__descriptor =
   esp_hosted_ieid__value_ranges,
   NULL,NULL,NULL,NULL   /* reserved[1234] */
 };
-static const ProtobufCEnumValue esp_hosted_config_msg_type__enum_values_by_number[40] =
+static const ProtobufCEnumValue esp_hosted_mad_swift_priv_type__enum_values_by_number[2] =
+{
+  { "MAD_SWIFT_PRIV_TYPE_CUSTOM", "ESP_HOSTED_MAD_SWIFT_PRIV_TYPE__MAD_SWIFT_PRIV_TYPE_CUSTOM", 0 },
+  { "MAD_SWIFT_PRIV_TYPE_LED_SET", "ESP_HOSTED_MAD_SWIFT_PRIV_TYPE__MAD_SWIFT_PRIV_TYPE_LED_SET", 1 },
+};
+static const ProtobufCIntRange esp_hosted_mad_swift_priv_type__value_ranges[] = {
+{0, 0},{0, 2}
+};
+static const ProtobufCEnumValueIndex esp_hosted_mad_swift_priv_type__enum_values_by_name[2] =
+{
+  { "MAD_SWIFT_PRIV_TYPE_CUSTOM", 0 },
+  { "MAD_SWIFT_PRIV_TYPE_LED_SET", 1 },
+};
+const ProtobufCEnumDescriptor esp_hosted_mad_swift_priv_type__descriptor =
+{
+  PROTOBUF_C__ENUM_DESCRIPTOR_MAGIC,
+  "EspHostedMadSwiftPrivType",
+  "EspHostedMadSwiftPrivType",
+  "EspHostedMadSwiftPrivType",
+  "",
+  2,
+  esp_hosted_mad_swift_priv_type__enum_values_by_number,
+  2,
+  esp_hosted_mad_swift_priv_type__enum_values_by_name,
+  1,
+  esp_hosted_mad_swift_priv_type__value_ranges,
+  NULL,NULL,NULL,NULL   /* reserved[1234] */
+};
+static const ProtobufCEnumValue esp_hosted_config_msg_type__enum_values_by_number[42] =
 {
   { "TypeCmdGetMACAddress", "ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetMACAddress", 0 },
   { "TypeRespGetMACAddress", "ESP_HOSTED_CONFIG_MSG_TYPE__TypeRespGetMACAddress", 1 },
@@ -4019,11 +4339,13 @@ static const ProtobufCEnumValue esp_hosted_config_msg_type__enum_values_by_numbe
   { "TypeRespSetWiFiMAXTXPower", "ESP_HOSTED_CONFIG_MSG_TYPE__TypeRespSetWiFiMAXTXPower", 37 },
   { "TypeCmdGetWiFiCurrTXPower", "ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdGetWiFiCurrTXPower", 38 },
   { "TypeRespGetWiFiCurrTXPower", "ESP_HOSTED_CONFIG_MSG_TYPE__TypeRespGetWiFiCurrTXPower", 39 },
+  { "TypeCmdSetMadSwiftPriv", "ESP_HOSTED_CONFIG_MSG_TYPE__TypeCmdSetMadSwiftPriv", 40 },
+  { "TypeRespSetMadSwiftPriv", "ESP_HOSTED_CONFIG_MSG_TYPE__TypeRespSetMadSwiftPriv", 41 },
 };
 static const ProtobufCIntRange esp_hosted_config_msg_type__value_ranges[] = {
-{0, 0},{0, 40}
+{0, 0},{0, 42}
 };
-static const ProtobufCEnumValueIndex esp_hosted_config_msg_type__enum_values_by_name[40] =
+static const ProtobufCEnumValueIndex esp_hosted_config_msg_type__enum_values_by_name[42] =
 {
   { "TypeCmdDisconnectAP", 14 },
   { "TypeCmdGetAPConfig", 6 },
@@ -4039,6 +4361,7 @@ static const ProtobufCEnumValueIndex esp_hosted_config_msg_type__enum_values_by_
   { "TypeCmdOTAWrite", 30 },
   { "TypeCmdSetAPConfig", 8 },
   { "TypeCmdSetMacAddress", 22 },
+  { "TypeCmdSetMadSwiftPriv", 40 },
   { "TypeCmdSetPowerSaveMode", 24 },
   { "TypeCmdSetSoftAPConfig", 12 },
   { "TypeCmdSetVendorSpecificIE", 34 },
@@ -4059,6 +4382,7 @@ static const ProtobufCEnumValueIndex esp_hosted_config_msg_type__enum_values_by_
   { "TypeRespOTAWrite", 31 },
   { "TypeRespSetAPConfig", 9 },
   { "TypeRespSetMacAddress", 23 },
+  { "TypeRespSetMadSwiftPriv", 41 },
   { "TypeRespSetPowerSaveMode", 25 },
   { "TypeRespSetSoftAPConfig", 13 },
   { "TypeRespSetVendorSpecificIE", 35 },
@@ -4073,9 +4397,9 @@ const ProtobufCEnumDescriptor esp_hosted_config_msg_type__descriptor =
   "EspHostedConfigMsgType",
   "EspHostedConfigMsgType",
   "",
-  40,
+  42,
   esp_hosted_config_msg_type__enum_values_by_number,
-  40,
+  42,
   esp_hosted_config_msg_type__enum_values_by_name,
   1,
   esp_hosted_config_msg_type__value_ranges,
