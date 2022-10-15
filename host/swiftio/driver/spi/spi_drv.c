@@ -37,7 +37,7 @@
 #define SEND_QUEUE_SIZE                 16
 #define RECV_QUEUE_SIZE                 16
 
-#define RECV_TASK_STACK_SIZE            (4 * 1024)
+#define RECV_TASK_STACK_SIZE            (64 * 1024)
 #define TRANS_TASK_STACK_SIZE           (4 * 1024)
 
 #define RECV_TASK_PRIORITY                      5
