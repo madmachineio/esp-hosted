@@ -34,14 +34,14 @@
 #define SPI_LOGE        printf
 
 
-#define SEND_QUEUE_SIZE                 16
-#define RECV_QUEUE_SIZE                 16
+#define SEND_QUEUE_SIZE                 100
+#define RECV_QUEUE_SIZE                 100
 
 #define RECV_TASK_STACK_SIZE            (64 * 1024)
 #define TRANS_TASK_STACK_SIZE           (4 * 1024)
 
-#define RECV_TASK_PRIORITY                      5
-#define TRANS_TASK_PRIORITY                     5
+#define RECV_TASK_PRIORITY                      -2
+#define TRANS_TASK_PRIORITY                     -3
 
 #define MAX_PAYLOAD_SIZE (MAX_SPI_BUFFER_SIZE - sizeof(struct esp_payload_header))
 
@@ -86,7 +86,7 @@ static void process_rx_task(void *arg, void *p2, void *p3);
 static uint8_t *get_tx_buffer(uint8_t *is_valid_tx_buf);
 static void deinit_netdev(void);
 
-#define ICMP_TIME_CHECK
+//#define ICMP_TIME_CHECK
 #ifdef ICMP_TIME_CHECK
 static long long recv_time = -1;
 static long long recv_tran_time = -1;
@@ -677,7 +677,7 @@ void esp_device_if_init(void *spi,
 		assert(ret == 0);
 	}
 
-	trans_sem = swifthal_os_sem_create(1, 100);
+	trans_sem = swifthal_os_sem_create(1, 1000);
 	if (trans_sem == NULL) {
 		SPI_LOGE("[sem] no mem \r\n");
 		return;
