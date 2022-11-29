@@ -94,4 +94,6 @@ typedef struct {
 interface_context_t * interface_insert_driver(int (*callback)(uint8_t val));
 int interface_remove_driver();
 void generate_startup_event(uint8_t cap);
+esp_err_t interface_send_event(int type, uint8_t* payload, uint32_t len);
+
 #endif

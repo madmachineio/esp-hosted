@@ -22,6 +22,8 @@
 #include "esp_ota_ops.h"
 #include "driver/rmt.h"
 #include "led_strip.h"
+#include "adapter.h"
+#include "interface.h"
 
 #define MAC_STR_LEN                 17
 #define MAC2STR(a)                  (a)[0], (a)[1], (a)[2], (a)[3], (a)[4], (a)[5]
@@ -111,7 +113,13 @@ static void station_event_handler(void *arg, esp_event_base_t event_base,
             esp_wifi_connect();
             retry++;
             ESP_LOGI(TAG, "Retry to connect to the AP");
+			//interface_send_event(ESP_PRIV_EVENT_STA_AUTORETRY, NULL, 0);
+			if(retry == MAX_RETRY){
+				//interface_send_event(ESP_PRIV_EVENT_STA_DISCONNECTED, NULL, 0);
+			}
         } else {
+        	ESP_LOGI(TAG,"Disconnected from AP");
+			interface_send_event(ESP_PRIV_EVENT_STA_DISCONNECTED, NULL, 0);
             wifi_event_sta_disconnected_t * disconnected_event =
                         (wifi_event_sta_disconnected_t *) event_data;
             if (disconnected_event->reason == WIFI_REASON_NO_AP_FOUND) {
@@ -127,6 +135,7 @@ static void station_event_handler(void *arg, esp_event_base_t event_base,
     } else if ((event_base == WIFI_EVENT) && (event_id == WIFI_EVENT_STA_CONNECTED)) {
         ESP_LOGI(TAG,"Connected to AP");
         esp_wifi_internal_reg_rxcb(ESP_IF_WIFI_STA, (wifi_rxcb_t) wlan_sta_rx_callback);
+		interface_send_event(ESP_PRIV_EVENT_STA_CONNECTED, NULL, 0);
         retry = 0;
         xEventGroupSetBits(wifi_event_group, WIFI_CONNECTED_BIT);
     }
@@ -140,11 +149,13 @@ static void softap_event_handler(void *arg, esp_event_base_t event_base,
         wifi_event_ap_staconnected_t *event = (wifi_event_ap_staconnected_t *) event_data;
         ESP_LOGI(TAG, "station "MACSTR" join, AID=%d",
             MAC2STR(event->mac), event->aid);
+		interface_send_event(ESP_PRIV_EVENT_AP_STACONNECTED, NULL, 0);
     } else if (event_id == WIFI_EVENT_AP_STADISCONNECTED) {
         wifi_event_ap_stadisconnected_t *event =
             (wifi_event_ap_stadisconnected_t *) event_data;
         ESP_LOGI(TAG, "station "MACSTR" leave, AID=%d",
             MAC2STR(event->mac), event->aid);
+		interface_send_event(ESP_PRIV_EVENT_AP_STADISCONNECTED, NULL, 0);
     } else if (event_id == WIFI_EVENT_AP_START) {
         esp_wifi_internal_reg_rxcb(ESP_IF_WIFI_AP, (wifi_rxcb_t) wlan_ap_rx_callback);
         esp_update_ap_mac();
@@ -534,7 +545,7 @@ err:
         resp_payload->resp = FAILURE;
     }
 err1:
-    if (event_registered) {
+    if (event_registered && !station_connected) {
         station_event_unregister();
         vEventGroupDelete(wifi_event_group);
     }
@@ -658,6 +669,8 @@ static esp_err_t cmd_disconnect_ap_handler (EspHostedConfigPayload *req,
         goto err;
     }
 
+	station_event_unregister();
+	
     ret = esp_wifi_disconnect();
     if (ret) {
         ESP_LOGE(TAG,"Failed to disconnect");
@@ -666,6 +679,7 @@ static esp_err_t cmd_disconnect_ap_handler (EspHostedConfigPayload *req,
 
     ESP_LOGI(TAG,"Disconnected from AP");
     resp_payload->resp = SUCCESS;
+	
     station_connected = false;
     return ESP_OK;
 

@@ -659,3 +659,83 @@ static void esp_spi_deinit(interface_handle_t *handle)
 		return;
 	}
 }
+
+
+esp_err_t interface_send_event(int type, uint8_t* payload, uint32_t payload_len)
+{
+	struct esp_payload_header *header = NULL;
+	interface_buffer_handle_t buf_handle = {0};
+	struct esp_priv_event *event = NULL;
+	uint8_t *pos = NULL;
+	uint16_t len = 0;
+
+	ESP_LOGI(TAG,"send priv event %d payload %x len %d\n", type, payload, len);
+
+	memset(&buf_handle, 0, sizeof(buf_handle));
+
+	buf_handle.payload = heap_caps_malloc(SPI_BUFFER_SIZE, MALLOC_CAP_DMA);
+	assert(buf_handle.payload);
+	memset(buf_handle.payload, 0, SPI_BUFFER_SIZE);
+
+	header = (struct esp_payload_header *) buf_handle.payload;
+
+	header->if_type = ESP_PRIV_IF;
+	header->if_num = 0;
+	header->offset = htole16(sizeof(struct esp_payload_header));
+	header->priv_pkt_type = ESP_PACKET_TYPE_EVENT;
+
+	/* Populate event data */
+	event = (struct esp_priv_event *) (buf_handle.payload + sizeof(struct esp_payload_header));
+
+	event->event_type = type;
+
+	/* Populate TLVs for event */
+	pos = event->event_data;
+
+	/* TLVs start */
+
+	/* TLV - Board type */
+	*pos = ESP_PRIV_FIRMWARE_CHIP_ID;   pos++;len++;
+	*pos = LENGTH_1_BYTE;               pos++;len++;
+	*pos = CONFIG_IDF_FIRMWARE_CHIP_ID; pos++;len++;
+
+	/* TLV - Peripheral clock in MHz */
+	*pos = ESP_PRIV_SPI_CLK_MHZ;        pos++;len++;
+	*pos = LENGTH_1_BYTE;               pos++;len++;
+#ifdef CONFIG_IDF_TARGET_ESP32
+	*pos = SPI_CLK_MHZ_ESP32;           pos++;len++;
+#elif defined CONFIG_IDF_TARGET_ESP32S2
+	*pos = SPI_CLK_MHZ_ESP32_S2;        pos++;len++;
+#elif defined CONFIG_IDF_TARGET_ESP32C3
+	*pos = SPI_CLK_MHZ_ESP32_C3;        pos++;len++;
+#endif
+
+	/* TLV - Capability */
+	*pos = ESP_PRIV_CAPABILITY;         pos++;len++;
+	*pos = LENGTH_1_BYTE;               pos++;len++;
+
+	if(payload && payload_len){
+		memcpy(pos, payload, payload_len);
+		len += payload_len;		
+	}
+
+	event->event_len = len;
+
+	/* payload len = Event len + sizeof(event type) + sizeof(event len) */
+	len += 2;
+	header->len = htole16(len);
+
+	buf_handle.payload_len = len + sizeof(struct esp_payload_header);
+	header->checksum = htole16(compute_checksum(buf_handle.payload, buf_handle.payload_len));
+
+	xQueueSend(spi_tx_queue[PRIO_Q_OTHERS], &buf_handle, portMAX_DELAY);
+
+	/* indicate waiting data on ready pin */
+	WRITE_PERI_REG(GPIO_OUT_W1TS_REG, (1 << gpio_data_ready));
+	/* process first data packet here to start transactions */
+	queue_next_transaction();
+
+	return ESP_OK;
+}
+
+
