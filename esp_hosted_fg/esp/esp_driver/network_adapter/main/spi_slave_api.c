@@ -553,10 +553,10 @@ static interface_handle_t * esp_spi_init(void)
 
 	/* Configuration for the SPI slave interface */
 	spi_slave_interface_config_t slvcfg={
-		.mode=SPI_MODE_2,
+		.mode=SPI_MODE_1,
 		.spics_io_num=GPIO_CS,
 		.queue_size=SPI_QUEUE_SIZE,
-		.flags=0,
+		.flags=SPI_SLAVE_BIT_LSBFIRST,
 		.post_setup_cb=spi_post_setup_cb,
 		.post_trans_cb=spi_post_trans_cb
 	};
