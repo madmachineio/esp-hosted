@@ -78,12 +78,12 @@ static int serial_ll_open(serial_ll_handle_t *serial_ll_hdl)
 
 	if (serial_ll_hdl->queue) {
 		/* clean up earlier queue */
-		vQueueDelete(serial_ll_hdl->queue);
+		swifthal_os_mq_destory(serial_ll_hdl->queue);
 	}
 
 	/* Queue - serial rx */
-	serial_ll_hdl->queue = xQueueCreate(TO_SERIAL_INFT_QUEUE_SIZE,
-		sizeof(interface_buffer_handle_t));
+	serial_ll_hdl->queue = swifthal_os_mq_create(sizeof(interface_buffer_handle_t),
+							TO_SERIAL_INFT_QUEUE_SIZE);
 
 	if (! serial_ll_hdl->queue) {
 		serial_ll_close(serial_ll_hdl);
@@ -120,7 +120,7 @@ static int serial_ll_close(serial_ll_handle_t * serial_ll_hdl)
 	serial_ll_hdl->state = DESTROY;
 
 	if (serial_ll_hdl->queue) {
-		vQueueDelete(serial_ll_hdl->queue);
+		swifthal_os_mq_destory(serial_ll_hdl->queue);
 		serial_ll_hdl->queue = NULL;
 	}
 
@@ -287,7 +287,7 @@ swiftio_ret_t serial_ll_rx_handler(interface_buffer_handle_t * buf_handle)
 	r.data = NULL;
 
 	/* send to serial queue */
-	if (0 != swifthal_os_mq_recv(serial_ll_hdl->queue,
+	if (0 != swifthal_os_mq_send(serial_ll_hdl->queue,
 		    &new_buf_handle, -1)) {
 		printf("Failed send serialif queue[%u]\n\r", new_buf_handle.if_num);
 		goto serial_buff_cleanup;

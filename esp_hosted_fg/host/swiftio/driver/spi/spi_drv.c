@@ -254,6 +254,13 @@ void swiftio_spi_init(void *spi,
 {
 	swiftio_ret_t retval = SWIFTIO_OK;
 
+	int ret = hosted_spi_init(spi, spi_cs_gpio);
+
+	if (ret != 0) {
+			SPI_LOGE("[%s] swift spi init failed", __FUNCTION__);
+			return;
+	}
+
 	esp_hand_gpio = hand_gpio;
 	esp_ready_gpio = ready_gpio;
 	
@@ -511,7 +518,7 @@ static int if_transaction(uint8_t *txbuff)
 			break;
 
 	default:
-		SPI_LOGE("default handler: Error in SPI transaction\n\r");
+		SPI_LOGE("default handler: Error in SPI transaction %d\n\r", retval);
 			goto done;
 			break;
 	}

@@ -49,7 +49,7 @@ int control_path_platform_init(void)
 	assert(read_sem);
 
 	/* grab the semaphore, so that task will be mandated to wait on semaphore */
-	swifthal_os_sem_take(read_sem, -1);
+	//swifthal_os_sem_take(read_sem, -1);
 
 	serial_ll_if_g = serial_ll_init(control_path_rx_indication);
 	if (!serial_ll_if_g) {
@@ -154,7 +154,7 @@ void * hosted_create_semaphore(int init_value)
 	return swifthal_os_sem_create(init_value, 10000);
 }
 
-unsigned int sleep(unsigned int seconds) {
+unsigned int e_sleep(unsigned int seconds) {
    swifthal_ms_sleep(seconds * 1000);
    return 0;
 }

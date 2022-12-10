@@ -55,9 +55,22 @@ struct mad_esp_wifi_data wifi_data[DEV_NUM];
 
 static void wifi_recv(struct network_handle *handle)
 {
-	struct mad_esp_wifi_data *wifi_if = container_of(handle, struct mad_esp_wifi_data, handle);
+	struct mad_esp_wifi_data *wifi_if = NULL; //= container_of(handle, struct mad_esp_wifi_data, handle);
 	struct pbuf *rx_buffer = NULL;
 
+	for(int i=0; i<DEV_NUM; i++){
+		if(wifi_data[i].handle == handle){
+			wifi_if = &wifi_data[i];
+			break;
+		}
+	}
+
+	//printf("recv handle %p find %p\n", handle, wifi_if->handle);
+
+	if(wifi_if == NULL){
+		printf("no find handle\n");
+		return;
+	}
 	rx_buffer = network_read(wifi_if->handle, 0);
 	if (rx_buffer && wifi_if->rx) {
 		wifi_if->rx(rx_buffer->payload, rx_buffer->len);
@@ -120,7 +133,8 @@ static void esp_if_event_handler(unsigned char event)
 	{
 		/* Initiate control path now */
 		printf("get event %d\n", event);
-		control_path_platform_init();
+		//control_path_platform_init();
+		init_hosted_control_lib();
 		if_evt_handler(MAD_ESP_HW_LINK_EVT_ACTIVE, if_evt_param);
 		break;
 	}
@@ -145,7 +159,7 @@ static int resp_check(ctrl_cmd_t *resp)
 	}
 
 	if (resp->resp_event_status != SUCCESS) {
-		process_failed_responses(resp);
+		printf("resp_event_status[%u]\n\r", resp->resp_event_status);
 		return FAILURE;
 	}
 
@@ -166,6 +180,16 @@ static int resp_get_mac(ctrl_cmd_t *resp, char *mac)
 
 	return FAILURE;
 }
+
+static int resp_set_station(ctrl_cmd_t *resp)
+{
+	if (resp->msg_id == CTRL_RESP_SET_WIFI_MODE) {
+		return SUCCESS;
+	}
+
+	return FAILURE;
+}
+
 
 static int resp_connect_ap(ctrl_cmd_t *resp, bool *connected)
 {
@@ -290,6 +314,7 @@ int mad_esp_sta_open(char *ssid,
 	int ret = 0;
 	ctrl_cmd_t connect_req = CTRL_CMD_DEFAULT_REQ();
 	ctrl_cmd_t mac_req = CTRL_CMD_DEFAULT_REQ();
+	ctrl_cmd_t sta_req = CTRL_CMD_DEFAULT_REQ();
 	ctrl_cmd_t *resp = NULL;
 	bool connected = false;
 
@@ -299,10 +324,29 @@ int mad_esp_sta_open(char *ssid,
 		return -EIO;
 	}
 
+	printf("open handle %p\n", wifi_data[DEV_STA].handle);
+
+	sta_req.u.wifi_mode.mode = WIFI_MODE_STA;
+	resp = wifi_set_mode(sta_req);
+	ret = resp_check(resp);
+	if (ret) {
+		return ret;
+	}
+
+	ret = resp_set_station(resp);
+	resp_clean(resp);
+
+	if (ret) {
+		return ret;
+	}
+
+	printf("set to sta pass\n");
+	
 	mac_req.u.wifi_mac.mode = WIFI_MODE_STA;
 	resp = wifi_get_mac(mac_req);
 	ret = resp_check(resp);
 	if (ret) {
+		printf("%s %d\n", __FILE__, __LINE__);
 		return ret;
 	}
 
@@ -311,6 +355,7 @@ int mad_esp_sta_open(char *ssid,
 	resp_clean(resp);
 
 	if (ret) {
+		printf("get mac fail\n");
 		return ret;
 	}
 
@@ -324,6 +369,7 @@ int mad_esp_sta_open(char *ssid,
 	resp = wifi_connect_ap(connect_req);
 	ret = resp_check(resp);
 	if (ret) {
+		printf("%s %d\n", __FILE__, __LINE__);
 		return ret;
 	}
 

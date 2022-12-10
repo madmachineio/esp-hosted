@@ -189,7 +189,7 @@ unsigned int msleep(unsigned int mseconds);
  *      0 : success
  *      <0 : failure
  */
-unsigned int sleep(unsigned int seconds);
+unsigned int e_sleep(unsigned int seconds);
 
 /*
  * serial_drv_open function opens driver interface.

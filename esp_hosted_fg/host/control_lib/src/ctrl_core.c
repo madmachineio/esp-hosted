@@ -810,7 +810,7 @@ static void ctrl_rx_thread(void const *arg)
 
 		/* 4.1 Block on read of protobuf encoded msg */
 		if (is_ctrl_lib_state(CTRL_LIB_STATE_INACTIVE)) {
-			sleep(1);
+			e_sleep(1);
 			continue;
 		}
 		buf = transport_pserial_read(&buf_len);
@@ -1484,6 +1484,7 @@ fail_req2:
 	mem_free(tx_data);
 	mem_free(buff_to_free2);
 	mem_free(buff_to_free1);
+	printf("Fail status %u\n", failure_status);
 	return FAILURE;
 }
 
