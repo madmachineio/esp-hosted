@@ -125,6 +125,50 @@ static wifi_auth_mode_e wifi_encryption_mode_covert(mad_esp_wifi_encryption_mode
 	return ret;
 }
 
+static int esp_host_event_handler(ctrl_cmd_t * app_event)
+{
+	if (!app_event || (app_event->msg_type != CTRL_EVENT)) {
+		if (app_event)
+			printf("Msg type is not event[%u]\n\r",app_event->msg_type);
+		goto fail_parsing;
+	}
+
+	if ((app_event->msg_id <= CTRL_EVENT_BASE) ||
+	    (app_event->msg_id >= CTRL_EVENT_MAX)) {
+		printf("Event Msg ID[%u] is not correct\n\r",app_event->msg_id);
+		goto fail_parsing;
+	}
+
+	switch(app_event->msg_id) {
+
+		case CTRL_EVENT_ESP_INIT: {
+			printf("CTRL_EVENT_ESP_INIT\r\n");
+			if_evt_handler(MAD_ESP_HW_LINK_EVT_ACTIVE, if_evt_param);
+			break;
+		} case CTRL_EVENT_HEARTBEAT: {
+			printf("CTRL_EVENT_HEARTBEAT\r\n");
+			if_evt_handler(MAD_ESP_HW_HEARTBEAT, (void*)app_event->u.e_heartbeat.hb_num);
+			break;
+		} case CTRL_EVENT_STATION_DISCONNECT_FROM_AP: {
+			printf("MAD_ESP_WIFI_EVT_AP_STADISCONNECTED\r\n");
+			if_evt_handler(MAD_ESP_WIFI_EVT_AP_STADISCONNECTED, if_evt_param);
+			break;
+		} case CTRL_EVENT_STATION_DISCONNECT_FROM_ESP_SOFTAP: {
+			printf("CTRL_EVENT_STATION_DISCONNECT_FROM_ESP_SOFTAP\r\n");
+			if_evt_handler(MAD_ESP_WIFI_EVT_STA_DISCONNECTED, app_event->u.e_sta_disconnected.mac);
+			break;
+		} default: {
+			printf("Invalid event[%u] to parse\n\r", app_event->msg_id);
+			break;
+		}
+	}
+	CLEANUP_CTRL_MSG(app_event);
+	return SUCCESS;
+
+fail_parsing:
+	CLEANUP_CTRL_MSG(app_event);
+	return FAILURE;
+}
 
 static void esp_if_event_handler(unsigned char event)
 {
@@ -135,11 +179,15 @@ static void esp_if_event_handler(unsigned char event)
 		printf("get event %d\n", event);
 		//control_path_platform_init();
 		init_hosted_control_lib();
-		if_evt_handler(MAD_ESP_HW_LINK_EVT_ACTIVE, if_evt_param);
+		//if_evt_handler(MAD_ESP_HW_LINK_EVT_ACTIVE, if_evt_param);
+		set_event_callback(CTRL_EVENT_ESP_INIT, esp_host_event_handler);
+		set_event_callback(CTRL_EVENT_HEARTBEAT, esp_host_event_handler);
+		set_event_callback(CTRL_EVENT_STATION_DISCONNECT_FROM_AP, esp_host_event_handler);
+		set_event_callback(CTRL_EVENT_STATION_DISCONNECT_FROM_ESP_SOFTAP, esp_host_event_handler);
 		break;
 	}
 	default:
-		if_evt_handler(event, if_evt_param);
+		//if_evt_handler(event, if_evt_param);
 		break;
 	}
 }
@@ -296,7 +344,6 @@ static mad_esp_wifi_scan_list_t *resp_scan_list(ctrl_cmd_t *resp, int *ap_count)
 		return wifi_list;
 	}
 }
-
 
 int mad_esp_init(mad_esp_interface *esp_if,
 		 void (*evt_handler)(mad_esp_event_t, void *),
