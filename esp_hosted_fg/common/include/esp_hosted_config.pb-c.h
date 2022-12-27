@@ -17,6 +17,8 @@ PROTOBUF_C__BEGIN_DECLS
 
 typedef struct ScanResult ScanResult;
 typedef struct ConnectedSTAList ConnectedSTAList;
+typedef struct CtrlMsgReqSetPrivCmd CtrlMsgReqSetPrivCmd;
+typedef struct CtrlMsgRespSetPrivCmd CtrlMsgRespSetPrivCmd;
 typedef struct CtrlMsgReqGetMacAddress CtrlMsgReqGetMacAddress;
 typedef struct CtrlMsgRespGetMacAddress CtrlMsgRespGetMacAddress;
 typedef struct CtrlMsgReqGetMode CtrlMsgReqGetMode;
@@ -156,11 +158,12 @@ typedef enum _CtrlMsgId {
   CTRL_MSG_ID__Req_SetWifiMaxTxPower = 119,
   CTRL_MSG_ID__Req_GetWifiCurrTxPower = 120,
   CTRL_MSG_ID__Req_ConfigHeartbeat = 121,
+  CTRL_MSG_ID__Req_SetPrivCmd = 122,
   /*
    * Add new control path command response before Req_Max
    * and update Req_Max 
    */
-  CTRL_MSG_ID__Req_Max = 122,
+  CTRL_MSG_ID__Req_Max = 123,
   /*
    ** Response Msgs *
    */
@@ -186,11 +189,12 @@ typedef enum _CtrlMsgId {
   CTRL_MSG_ID__Resp_SetWifiMaxTxPower = 219,
   CTRL_MSG_ID__Resp_GetWifiCurrTxPower = 220,
   CTRL_MSG_ID__Resp_ConfigHeartbeat = 221,
+  CTRL_MSG_ID__Resp_SetPrivCmd = 222,
   /*
    * Add new control path command response before Resp_Max
    * and update Resp_Max 
    */
-  CTRL_MSG_ID__Resp_Max = 222,
+  CTRL_MSG_ID__Resp_Max = 223,
   /*
    ** Event Msgs *
    */
@@ -240,6 +244,27 @@ struct  ConnectedSTAList
 /*
  ** Req/Resp structure *
  */
+struct  CtrlMsgReqSetPrivCmd
+{
+  ProtobufCMessage base;
+  int32_t cmd;
+  ProtobufCBinaryData payload;
+};
+#define CTRL_MSG__REQ__SET_PRIV_CMD__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&ctrl_msg__req__set_priv_cmd__descriptor) \
+    , 0, {0,NULL} }
+
+
+struct  CtrlMsgRespSetPrivCmd
+{
+  ProtobufCMessage base;
+  int32_t resp;
+};
+#define CTRL_MSG__RESP__SET_PRIV_CMD__INIT \
+ { PROTOBUF_C_MESSAGE_INIT (&ctrl_msg__resp__set_priv_cmd__descriptor) \
+    , 0 }
+
+
 struct  CtrlMsgReqGetMacAddress
 {
   ProtobufCMessage base;
@@ -710,6 +735,7 @@ typedef enum {
   CTRL_MSG__PAYLOAD_REQ_SET_WIFI_MAX_TX_POWER = 119,
   CTRL_MSG__PAYLOAD_REQ_GET_WIFI_CURR_TX_POWER = 120,
   CTRL_MSG__PAYLOAD_REQ_CONFIG_HEARTBEAT = 121,
+  CTRL_MSG__PAYLOAD_REQ_SET_PRIV_CMD = 122,
   CTRL_MSG__PAYLOAD_RESP_GET_MAC_ADDRESS = 201,
   CTRL_MSG__PAYLOAD_RESP_SET_MAC_ADDRESS = 202,
   CTRL_MSG__PAYLOAD_RESP_GET_WIFI_MODE = 203,
@@ -731,6 +757,7 @@ typedef enum {
   CTRL_MSG__PAYLOAD_RESP_SET_WIFI_MAX_TX_POWER = 219,
   CTRL_MSG__PAYLOAD_RESP_GET_WIFI_CURR_TX_POWER = 220,
   CTRL_MSG__PAYLOAD_RESP_CONFIG_HEARTBEAT = 221,
+  CTRL_MSG__PAYLOAD_RESP_SET_PRIV_CMD = 222,
   CTRL_MSG__PAYLOAD_EVENT_ESP_INIT = 301,
   CTRL_MSG__PAYLOAD_EVENT_HEARTBEAT = 302,
   CTRL_MSG__PAYLOAD_EVENT_STATION_DISCONNECT_FROM__AP = 303,
@@ -775,6 +802,7 @@ struct  CtrlMsg
     CtrlMsgReqSetWifiMaxTxPower *req_set_wifi_max_tx_power;
     CtrlMsgReqGetWifiCurrTxPower *req_get_wifi_curr_tx_power;
     CtrlMsgReqConfigHeartbeat *req_config_heartbeat;
+    CtrlMsgReqSetPrivCmd *req_set_priv_cmd;
     /*
      ** Responses *
      */
@@ -799,6 +827,7 @@ struct  CtrlMsg
     CtrlMsgRespSetWifiMaxTxPower *resp_set_wifi_max_tx_power;
     CtrlMsgRespGetWifiCurrTxPower *resp_get_wifi_curr_tx_power;
     CtrlMsgRespConfigHeartbeat *resp_config_heartbeat;
+    CtrlMsgRespSetPrivCmd *resp_set_priv_cmd;
     /*
      ** Notifications *
      */
@@ -850,6 +879,44 @@ ConnectedSTAList *
                       const uint8_t       *data);
 void   connected_stalist__free_unpacked
                      (ConnectedSTAList *message,
+                      ProtobufCAllocator *allocator);
+/* CtrlMsgReqSetPrivCmd methods */
+void   ctrl_msg__req__set_priv_cmd__init
+                     (CtrlMsgReqSetPrivCmd         *message);
+size_t ctrl_msg__req__set_priv_cmd__get_packed_size
+                     (const CtrlMsgReqSetPrivCmd   *message);
+size_t ctrl_msg__req__set_priv_cmd__pack
+                     (const CtrlMsgReqSetPrivCmd   *message,
+                      uint8_t             *out);
+size_t ctrl_msg__req__set_priv_cmd__pack_to_buffer
+                     (const CtrlMsgReqSetPrivCmd   *message,
+                      ProtobufCBuffer     *buffer);
+CtrlMsgReqSetPrivCmd *
+       ctrl_msg__req__set_priv_cmd__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data);
+void   ctrl_msg__req__set_priv_cmd__free_unpacked
+                     (CtrlMsgReqSetPrivCmd *message,
+                      ProtobufCAllocator *allocator);
+/* CtrlMsgRespSetPrivCmd methods */
+void   ctrl_msg__resp__set_priv_cmd__init
+                     (CtrlMsgRespSetPrivCmd         *message);
+size_t ctrl_msg__resp__set_priv_cmd__get_packed_size
+                     (const CtrlMsgRespSetPrivCmd   *message);
+size_t ctrl_msg__resp__set_priv_cmd__pack
+                     (const CtrlMsgRespSetPrivCmd   *message,
+                      uint8_t             *out);
+size_t ctrl_msg__resp__set_priv_cmd__pack_to_buffer
+                     (const CtrlMsgRespSetPrivCmd   *message,
+                      ProtobufCBuffer     *buffer);
+CtrlMsgRespSetPrivCmd *
+       ctrl_msg__resp__set_priv_cmd__unpack
+                     (ProtobufCAllocator  *allocator,
+                      size_t               len,
+                      const uint8_t       *data);
+void   ctrl_msg__resp__set_priv_cmd__free_unpacked
+                     (CtrlMsgRespSetPrivCmd *message,
                       ProtobufCAllocator *allocator);
 /* CtrlMsgReqGetMacAddress methods */
 void   ctrl_msg__req__get_mac_address__init
@@ -1657,6 +1724,12 @@ typedef void (*ScanResult_Closure)
 typedef void (*ConnectedSTAList_Closure)
                  (const ConnectedSTAList *message,
                   void *closure_data);
+typedef void (*CtrlMsgReqSetPrivCmd_Closure)
+                 (const CtrlMsgReqSetPrivCmd *message,
+                  void *closure_data);
+typedef void (*CtrlMsgRespSetPrivCmd_Closure)
+                 (const CtrlMsgRespSetPrivCmd *message,
+                  void *closure_data);
 typedef void (*CtrlMsgReqGetMacAddress_Closure)
                  (const CtrlMsgReqGetMacAddress *message,
                   void *closure_data);
@@ -1800,6 +1873,8 @@ extern const ProtobufCEnumDescriptor    ctrl_msg_type__descriptor;
 extern const ProtobufCEnumDescriptor    ctrl_msg_id__descriptor;
 extern const ProtobufCMessageDescriptor scan_result__descriptor;
 extern const ProtobufCMessageDescriptor connected_stalist__descriptor;
+extern const ProtobufCMessageDescriptor ctrl_msg__req__set_priv_cmd__descriptor;
+extern const ProtobufCMessageDescriptor ctrl_msg__resp__set_priv_cmd__descriptor;
 extern const ProtobufCMessageDescriptor ctrl_msg__req__get_mac_address__descriptor;
 extern const ProtobufCMessageDescriptor ctrl_msg__resp__get_mac_address__descriptor;
 extern const ProtobufCMessageDescriptor ctrl_msg__req__get_mode__descriptor;

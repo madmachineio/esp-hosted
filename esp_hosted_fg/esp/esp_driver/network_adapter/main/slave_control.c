@@ -21,6 +21,10 @@
 #include "esp_hosted_config.pb-c.h"
 #include "esp_ota_ops.h"
 
+#include "driver/rmt.h"
+#include "led_strip.h"
+
+
 #define MAC_STR_LEN                 17
 #define MAC2STR(a)                  (a)[0], (a)[1], (a)[2], (a)[3], (a)[4], (a)[5]
 #define MACSTR                      "%02x:%02x:%02x:%02x:%02x:%02x"
@@ -1870,6 +1874,77 @@ err:
 	return ESP_OK;
 }
 
+// Function sets mad swift priv
+led_strip_t *strip = NULL;
+void mad_swift_hw_init(void)
+{
+	#define CONFIG_EXAMPLE_RMT_TX_GPIO 8
+	#define CONFIG_EXAMPLE_STRIP_LED_NUMBER 1
+	#define EXAMPLE_CHASE_SPEED_MS 10
+	rmt_config_t config = RMT_DEFAULT_CONFIG_TX(CONFIG_EXAMPLE_RMT_TX_GPIO, RMT_CHANNEL_0);
+	config.clk_div = 2;
+	ESP_ERROR_CHECK(rmt_config(&config));
+	ESP_ERROR_CHECK(rmt_driver_install(config.channel, 0, 0));
+	led_strip_config_t strip_config = LED_STRIP_DEFAULT_CONFIG(CONFIG_EXAMPLE_STRIP_LED_NUMBER, (led_strip_dev_t)config.channel);
+	strip = led_strip_new_rmt_ws2812(&strip_config);
+	if (!strip) {
+		ESP_LOGE(TAG, "install WS2812 driver failed");
+	}
+
+}
+
+static esp_err_t req_set_priv_cmd_handler (CtrlMsg *req,
+		CtrlMsg *resp, void *priv_data)
+{
+	esp_err_t ret = ESP_OK;
+	uint8_t mac[MAC_LEN] = {0};
+	uint8_t interface = 0;
+	CtrlMsgRespSetMacAddress *resp_payload = NULL;
+
+	if (!req || !resp || !req->req_set_priv_cmd ||
+	    !req->req_set_priv_cmd->payload.data) {
+		ESP_LOGE(TAG," Invalid command request");
+		return ESP_FAIL;
+	}
+
+	resp_payload = (CtrlMsgRespSetPrivCmd*)
+		calloc(1,sizeof(CtrlMsgRespSetPrivCmd));
+	if (!resp_payload) {
+		ESP_LOGE(TAG,"Failed to allocate memory");
+		return ESP_ERR_NO_MEM;
+	}
+	ctrl_msg__resp__set_priv_cmd__init(resp_payload);
+	resp->payload_case = CTRL_MSG__PAYLOAD_RESP_SET_PRIV_CMD;
+	resp->resp_set_priv_cmd = resp_payload;
+
+	switch(req->req_set_priv_cmd->cmd){
+		case 1:
+			{
+				uint32_t rgb;
+				memcpy(&rgb, req->req_set_priv_cmd->payload.data, 4);
+				if(strip){
+					ESP_ERROR_CHECK(strip->clear(strip, 100));
+					ESP_LOGI(TAG, "LED Rainbow Chase Start 0x%x", (unsigned int)rgb);
+					strip->set_pixel(strip, 0, (rgb>>16)&0xFF, (rgb>>8)&0xFF, rgb&0xff);
+					ESP_ERROR_CHECK(strip->refresh(strip, 100));
+		            //vTaskDelay(pdMS_TO_TICKS(EXAMPLE_CHASE_SPEED_MS));
+		            //strip->clear(strip, 50);
+		            //vTaskDelay(pdMS_TO_TICKS(EXAMPLE_CHASE_SPEED_MS));
+					ESP_LOGI(TAG, "LED Rainbow Chase End");
+				}else{
+					ESP_LOGE(TAG, "LED Strip not init");
+				}
+			}
+			break;
+		default:
+			break;
+	}
+
+	resp_payload->resp = SUCCESS;
+	return ESP_OK;
+}
+
+
 static esp_ctrl_msg_req_t req_table[] = {
 	{
 		.req_num = CTRL_MSG_ID__Req_GetMACAddress ,
@@ -1954,6 +2029,10 @@ static esp_ctrl_msg_req_t req_table[] = {
 	{
 		.req_num = CTRL_MSG_ID__Req_ConfigHeartbeat,
 		.command_handler = req_config_heartbeat
+	},
+	{
+		.req_num = CTRL_MSG_ID__Req_SetPrivCmd,
+		.command_handler = req_set_priv_cmd_handler
 	},
 };
 
@@ -2117,6 +2196,9 @@ static void esp_ctrl_msg_cleanup(CtrlMsg *resp)
 			break;
 		} case (CTRL_MSG_ID__Event_StationDisconnectFromESPSoftAP) : {
 			mem_free(resp->event_station_disconnect_from_esp_softap);
+			break;
+		} case (CTRL_MSG_ID__Resp_SetPrivCmd) : {
+			mem_free(resp->resp_set_priv_cmd);
 			break;
 		} default: {
 			ESP_LOGE(TAG, "Unsupported CtrlMsg type[%u]",resp->msg_id);
@@ -2337,3 +2419,4 @@ err:
 	esp_ctrl_msg_cleanup(&ntfy);
 	return ESP_FAIL;
 }
+

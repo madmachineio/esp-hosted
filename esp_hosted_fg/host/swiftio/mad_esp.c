@@ -246,6 +246,16 @@ static int resp_stop_softap(ctrl_cmd_t *resp)
 	return FAILURE;
 }
 
+static int resp_set_priv_cmd(ctrl_cmd_t *resp)
+{
+	if (resp->msg_id == CTRL_RESP_SET_PRIV_CMD) {
+		return SUCCESS;
+	}
+
+	return FAILURE;
+}
+
+
 static mad_esp_wifi_scan_list_t *resp_scan_list(ctrl_cmd_t *resp, int *ap_count)
 {
 	if (resp->msg_id != CTRL_RESP_GET_AP_SCAN_LIST) {
@@ -636,6 +646,30 @@ const mad_esp_wifi_scan_list_t *mad_esp_wifi_scan_list(int *ap_count)
 	return list;
 }
 
+
+int mad_swift_set_priv(int cmd, unsigned char *data, int length)
+{
+	ctrl_cmd_t req = CTRL_CMD_DEFAULT_REQ();
+	ctrl_cmd_t *resp = NULL;
+	int ret = 0;
+
+	req.u.priv_cmd.cmd = cmd;
+	req.u.priv_cmd.data = data;
+	req.u.priv_cmd.length = length;
+
+	resp = set_priv_cmd(req);
+
+	ret = resp_check(resp);
+	if (ret) {
+		return ret;
+	}
+
+	ret = resp_set_priv_cmd(resp);
+
+	resp_clean(resp);
+
+	return ret;
+}
 
 
 

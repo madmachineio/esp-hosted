@@ -584,6 +584,10 @@ static int ctrl_app_parse_resp(CtrlMsg *ctrl_msg, ctrl_cmd_t *app_resp)
 			CHECK_CTRL_MSG_NON_NULL(resp_config_heartbeat);
 			CHECK_CTRL_MSG_FAILED(resp_config_heartbeat);
 			break;
+		} case CTRL_RESP_SET_PRIV_CMD: {
+			CHECK_CTRL_MSG_NON_NULL(resp_set_priv_cmd);
+			CHECK_CTRL_MSG_FAILED(resp_set_priv_cmd);
+			break;
 		} default: {
 			command_log("Unsupported Control Resp[%u]\n", ctrl_msg->msg_id);
 			goto fail_parse_ctrl_msg;
@@ -1378,6 +1382,17 @@ int ctrl_app_send_req(ctrl_cmd_t *app_req)
 			} else {
 				printf("Disable Heartbeat\n");
 			}
+			break;
+		} case CTRL_REQ_SET_PRIV_CMD: {
+			priv_cmd_t * p = &app_req->u.priv_cmd;
+			CTRL_ALLOC_ASSIGN(CtrlMsgReqSetPrivCmd, req_set_priv_cmd);
+
+			ctrl_msg__req__set_priv_cmd__init(req_payload);
+
+			req_payload->cmd = p->cmd;
+			req_payload->payload.len = p->length;
+			req_payload->payload.data = p->data;
+
 			break;
 		} default: {
 			failure_status = CTRL_ERR_UNSUPPORTED_MSG;

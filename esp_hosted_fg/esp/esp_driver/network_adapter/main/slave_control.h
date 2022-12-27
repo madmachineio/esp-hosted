@@ -50,4 +50,6 @@ esp_err_t ctrl_notify_handler(uint32_t session_id,const uint8_t *inbuf,
 void send_event_to_host(int event_id);
 void send_event_data_to_host(int event_id, uint8_t *data, int size);
 
+void mad_swift_hw_init(void);
+
 #endif /*__SLAVE_CONTROL__H__*/

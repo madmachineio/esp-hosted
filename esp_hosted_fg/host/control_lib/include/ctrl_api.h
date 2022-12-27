@@ -105,6 +105,7 @@ typedef enum {
 	CTRL_REQ_GET_WIFI_CURR_TX_POWER    = CTRL_MSG_ID__Req_GetWifiCurrTxPower, //0x78
 
 	CTRL_REQ_CONFIG_HEARTBEAT          = CTRL_MSG_ID__Req_ConfigHeartbeat,    //0x79
+	CTRL_REQ_SET_PRIV_CMD			   = CTRL_MSG_ID__Req_SetPrivCmd,
 	/*
 	 * Add new control path command response before Req_Max
 	 * and update Req_Max
@@ -141,6 +142,7 @@ typedef enum {
 	CTRL_RESP_GET_WIFI_CURR_TX_POWER    = CTRL_MSG_ID__Resp_GetWifiCurrTxPower, //0x78 -> 0xdc
 
 	CTRL_RESP_CONFIG_HEARTBEAT          = CTRL_MSG_ID__Resp_ConfigHeartbeat,    //0x79 -> 0xdd
+	CTRL_RESP_SET_PRIV_CMD				= CTRL_MSG_ID__Resp_SetPrivCmd,
 	/*
 	 * Add new control path comm       and response before Resp_Max
 	 * and update Resp_Max
@@ -317,6 +319,12 @@ typedef struct {
 	char mac[MAX_MAC_STR_LEN];
 } event_station_disconn_t;
 
+typedef struct {
+	int32_t cmd;
+	int32_t length;
+	uint8_t *data;
+} priv_cmd_t;
+
 typedef struct Ctrl_cmd_t {
 	/* msg type could be 1. req 2. resp 3. notification */
 	uint8_t msg_type;
@@ -347,6 +355,8 @@ typedef struct Ctrl_cmd_t {
 		event_heartbeat_t           e_heartbeat;
 
 		event_station_disconn_t     e_sta_disconnected;
+
+		priv_cmd_t					priv_cmd;
 	}u;
 
 	/* By default this callback is set to NULL.
@@ -523,6 +533,9 @@ ctrl_cmd_t * ota_write(ctrl_cmd_t req);
  * sets newly written OTA partition as boot partition for next boot,
  * Creates timer which reset ESP32 after 5 sec */
 ctrl_cmd_t * ota_end(ctrl_cmd_t req);
+
+ctrl_cmd_t * priv_set_cmd(ctrl_cmd_t req);
+
 
 /* Get the interface up for interface `iface` */
 int interface_up(int sockfd, char* iface);

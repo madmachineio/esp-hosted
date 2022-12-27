@@ -96,9 +96,10 @@ enum CtrlMsgId {
     Req_GetWifiCurrTxPower = 120;
 
     Req_ConfigHeartbeat = 121;
+    Req_SetPrivCmd = 122;
     /* Add new control path command response before Req_Max
      * and update Req_Max */
-    Req_Max = 122;
+    Req_Max = 123;
 
     /** Response Msgs **/
     Resp_Base = 200;
@@ -130,9 +131,10 @@ enum CtrlMsgId {
     Resp_GetWifiCurrTxPower = 220;
 
     Resp_ConfigHeartbeat = 221;
+    Resp_SetPrivCmd = 222;
     /* Add new control path command response before Resp_Max
      * and update Resp_Max */
-    Resp_Max = 222;
+    Resp_Max = 223;
 
     /** Event Msgs **/
     Event_Base = 300;
@@ -162,6 +164,15 @@ message ConnectedSTAList {
 
 /* Control path structures */
 /** Req/Resp structure **/
+message CtrlMsg_Req_SetPrivCmd {
+    int32 cmd = 1;
+    bytes payload = 2;
+}
+
+message CtrlMsg_Resp_SetPrivCmd {
+    int32 resp = 1;
+}
+
 message CtrlMsg_Req_GetMacAddress {
     int32 mode = 1;
 }
@@ -302,7 +313,7 @@ message CtrlMsg_Req_VendorIEData {
     int32 length = 2;
     bytes vendor_oui = 3;
     int32 vendor_oui_type = 4;
-    bytes payload = 5; 
+    bytes payload = 5;
 }
 
 message CtrlMsg_Req_SetSoftAPVendorSpecificIE {
@@ -395,6 +406,7 @@ message CtrlMsg {
         CtrlMsg_Req_SetWifiMaxTxPower req_set_wifi_max_tx_power = 119;
         CtrlMsg_Req_GetWifiCurrTxPower req_get_wifi_curr_tx_power = 120;
         CtrlMsg_Req_ConfigHeartbeat req_config_heartbeat = 121;
+        CtrlMsg_Req_SetPrivCmd req_set_priv_cmd =122;
 
         /** Responses **/
         CtrlMsg_Resp_GetMacAddress resp_get_mac_address = 201;
@@ -422,6 +434,7 @@ message CtrlMsg {
         CtrlMsg_Resp_SetWifiMaxTxPower resp_set_wifi_max_tx_power = 219;
         CtrlMsg_Resp_GetWifiCurrTxPower resp_get_wifi_curr_tx_power = 220;
         CtrlMsg_Resp_ConfigHeartbeat resp_config_heartbeat = 221;
+        CtrlMsg_Resp_SetPrivCmd resp_set_priv_cmd =222;
 
         /** Notifications **/
         CtrlMsg_Event_ESPInit event_esp_init = 301;

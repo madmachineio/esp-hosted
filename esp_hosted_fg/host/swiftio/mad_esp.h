@@ -91,4 +91,6 @@ int mad_esp_ap_tx(unsigned char *data, unsigned int len);
 
 const mad_esp_wifi_scan_list_t *mad_esp_wifi_scan_list(int *ap_count);
 
+int mad_swift_set_priv(int cmd, unsigned char *data, int length);
+
 #endif /* _MAD_ESP_H_ */
